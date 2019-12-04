@@ -125,7 +125,6 @@ try {
          }
          removeLayers(map, polylinelayer);
          loadMap(map, maplevel, allMapData, imageUrlParam);
-
          console.log(mapData);
 
          if (searchTermParam != undefined) {
@@ -185,7 +184,7 @@ try {
             return;
          }
       });
-     
+
       removeLayers(map, polylinelayer);
 
       openFloorMap(foundMapLevelToSearch.level, titleToSearch);
@@ -263,9 +262,9 @@ try {
             var polyLineLArray = setPolyLineCordinate(polygonArray, bounds);
             var polyline = L.polygon(polyLineLArray, { color: '#78e14e', weight: 5, opacity: 0.5, smoothFactor: 1 }).addTo(map);
             polylinelayer.push(polyline);
-         
+
             console.log("current zoom is " + this._zoom);
-   
+
             map.setView([originaly, x], 0);
             isfound = true;
             break;
@@ -338,6 +337,8 @@ try {
     * 
     */
    function openFloorMap(level, searhTerm) {
+      //Dynamically create the Floor Map Selection
+      createFloorMapsSelectionButtons(level,allMapData);
       //set the currently loaded map level
       currentMapLevel = level;
       let level1mapUrl = new URL(floorMaphtml);
@@ -369,7 +370,8 @@ try {
       console.log(currentMapLevel);
 
       if (undefined != level) {
-         maplevel = Math.floor(currentMapLevel / 10 % 10) * 10 + level;
+         //maplevel = Math.floor(currentMapLevel / 10 % 10) * 10 + level;
+         maplevel = level;
          imageUrl = imageUrlbaseName + maplevel + ".jpg";
       } else {
          maplevel = 10;

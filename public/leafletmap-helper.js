@@ -31,6 +31,8 @@ function loadMap(map, maplevel, allMapData, imageUrlParam) {
     } else {
         imageUrl = defaultImageUrl;
     }
+
+    createFloorMapsSelectionButtons(levelToLoad, allMapData);
     currentImageMap = L.imageOverlay(imageUrl, bounds).addTo(map);
 
     map.fitBounds(bounds);
@@ -187,4 +189,41 @@ function setPolyLineCordinate(polygonArray, bounds) {
     })
 
     return originalPolygonArray;
+}
+/**
+ * 
+ * @param {*} data1 
+ * @param {*} data2 
+ */
+function compare(data1, data2) {
+    if (data1.level > data2.level) {
+        return 1;
+    } else {
+        return -1;
+    }
+}
+/**
+ * 
+ */
+function createFloorMapsSelectionButtons(level, allMapData) {
+    let parentLevel = Math.floor(level / 10 % 10);
+    const mapLevelNode = document.getElementById("mapLevelId");
+
+    while (mapLevelNode.firstChild) {
+        mapLevelNode.removeChild(mapLevelNode.firstChild);
+    }
+
+
+    let filteredMapdata = allMapData.filter(mapData => mapData.parentLevel == parentLevel);
+
+    filteredMapdata.sort(compare);
+    filteredMapdata.forEach(_data => {
+        var btn = document.createElement("button");
+        btn.setAttribute("type", "submit");
+        btn.setAttribute("onclick", "openLevelMap(" + _data.level + ")");
+        btn.setAttribute("class", "btn btn-default");
+        btn.setAttribute("id", "bt1");
+        btn.innerHTML = _data.name;
+        document.getElementById("mapLevelId").appendChild(btn);
+    })
 }
