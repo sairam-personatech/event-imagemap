@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #e9e9e9;
+        }
+
+        .topnav a {
+            float: left;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .topnav .search-container {
+            float: right;
+        }
+
+        .topnav input[type=text] {
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 17px;
+            border: none;
+        }
+
+        .topnav .search-container button {
+            float: right;
+            padding: 6px;
+            margin-top: 8px;
+            margin-right: 16px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .topnav .search-container button:hover {
+            background: #ccc;
+        }
+
+        @media screen and (max-width: 300px) {
+            .topnav .search-container {
+                float: none;
+            }
+
+            .topnav a,
+            .topnav input[type=text],
+            .topnav .search-container button {
+                float: none;
+                display: block;
+                text-align: left;
+                width: 100%;
+                margin: 0;
+                padding: 14px;
+            }
+
+            .topnav input[type=text] {
+                border: 1px solid #ccc;
+            }
+        }
+
+        .btn-group button {
+            background-color: #4CAF50;
+            /* Green background */
+            border: 1px solid green;
+            /* Green border */
+            color: white;
+            /* White text */
+            padding: 10px 24px;
+            /* Some padding */
+            cursor: pointer;
+            /* Pointer/hand icon */
+            float: left;
+            /* Float the buttons side by side */
+        }
+
+        /* Clear floats (clearfix hack) */
+        .btn-group:after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .btn-group button:not(:last-child) {
+            border-right: none;
+            /* Prevent double borders */
+        }
+
+        /* Add a background color on hover */
+        .btn-group button:hover {
+            background-color: #3e8e41;
+        }
+
+        .btn-group-ver button {
+            background-color: #4CAF50;
+            /* Green background */
+            border: 1px solid green;
+            /* Green border */
+            color: white;
+            /* White text */
+            padding: 10px 24px;
+            /* Some padding */
+            cursor: pointer;
+            /* Pointer/hand icon */
+            width: 10%;
+            /* Set a width if needed */
+            display: block;
+            /* Make the buttons appear below each other */
+        }
+
+        .btn-group-ver button:not(:last-child) {
+            border-bottom: none;
+            /* Prevent double borders */
+        }
+
+        /* Add a background color on hover */
+        .btn-group-ver button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui. 
+        css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.min.js"
+        crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <script>
+        $(function () {
+            autoComplete()
+        }); 
+    </script> -->
+</head>
+
+<body>
+    <div class="topnav">
+        <div class="search-container">
+            <input type="text" id="searchString" placeholder="Search across level" name="search">
+            <button type="submit" onclick="searchAcrossLevel(document.getElementById('searchString').value)">Submit</button>
+            <div>
+                <input type="text" id="searchStringComma" placeholder="Search in below map" name="searchComa">
+                <button type="submit"
+                    onclick="searchInMap(document.getElementById('searchStringComma').value)">Submit</button>
+            </div>
+
+        </div>
+        <h4>Floor Levels</h4>
+
+        <div class="btn-group-ver">
+            <button type="submit" onclick="openFloorMap(10)" class="btn btn-default">Level 1</button>
+            <button type="submit" onclick="openFloorMap(20)" class="btn btn-default">Level 2</button>
+        </div>
+        <h4>Floor Maps</h4>
+        <div id= "mapLevelId" class="btn-group">
+            <!-- <button id="bt1" type="submit" onclick="openLevelMap(0)" class="btn btn-default">Map 1</button>
+            <button id="bt1" type="submit" onclick="openLevelMap(1)" class="btn btn-default">Map 2</button> -->
+        </div>
+    </div>
+    <div class="topnav">
+        <!-- <aside>
+            <h4>Floor</h3>
+                <ul>
+                    <li><button type="submit" onclick="openFloorMap(10)" class="btn btn-default">1</button></li>
+                    <li><button type="submit" onclick="openFloorMap(20)" class="btn btn-default">2</button></li>
+                     <li><button type="submit" onclick="openFloorMap(2)" class="btn btn-default">3</button></li>
+                </ul>
+        </aside> -->
+    </div>
+    <div id="map" style="width:400; height: 750px;">
+
+    </div>
+</body>
+<script src="config.js"></script>
+<script src="leafletmap-helper.js"></script>
+<script src="leafletmap.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</html>
