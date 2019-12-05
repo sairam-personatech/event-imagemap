@@ -1,3 +1,9 @@
+import {currentVal} from "./global";
+import { config } from "./config";
+
+const defaultImageUrl = config.defaultImageUrl;
+let imageUrl;
+
 /**
  * 
  * @param {*} map 
@@ -5,7 +11,7 @@
  * @param {*} allMapData 
  * @param {*} imageUrlParam 
  */
-function loadMap(map, maplevel, allMapData, imageUrlParam) {
+export function loadMap(map, maplevel, allMapData, imageUrlParam) {
     let levelToLoad = 10; //default
 
     if (undefined != maplevel) {
@@ -13,19 +19,20 @@ function loadMap(map, maplevel, allMapData, imageUrlParam) {
     }
 
     //set current Map Level to be used for child Maps
-    currentMapLevel = levelToLoad;
+    currentVal.mapLevel = levelToLoad;
 
-    mapData = allMapData.find(mapData => mapData.level == levelToLoad);
-    let areas = mapData['area'];
+    currentVal.mapData = allMapData.find(mapData => mapData.level == levelToLoad);
+    let areas = currentVal.mapData['area'];
 
     let area = areas.filter(_area => _area['title'].toUpperCase() == "Image Map".toUpperCase())[0];
 
     let cordsString = area['coords'];
     let cords = cordsString.split(",");
 
-    bounds[1][0] = cords[3];
-    bounds[1][1] = cords[2];
-
+    currentVal.bounds[1][0] = cords[3];
+    currentVal.bounds[1][1] = cords[2];
+    
+    let imageUrl;
     if (imageUrlParam != undefined) {
         imageUrl = imageUrlParam;
     } else {
@@ -33,12 +40,12 @@ function loadMap(map, maplevel, allMapData, imageUrlParam) {
     }
 
     createFloorMapsSelectionButtons(levelToLoad, allMapData);
-    currentImageMap = L.imageOverlay(imageUrl, bounds).addTo(map);
+    currentVal.imageMap = L.imageOverlay(imageUrl, currentVal.bounds).addTo(map);
 
-    map.fitBounds(bounds);
+    map.fitBounds(currentVal.bounds);
     //map.fitBounds(bounds).setZoom(-2);
 
-    console.log(mapData);
+    //console.log(mapData);
 
 
 }
@@ -50,7 +57,7 @@ function loadMap(map, maplevel, allMapData, imageUrlParam) {
  * @param {*} theMarker 
  * @param {*} popups 
  */
-function closeMarkerAndPopUps(map, currentImageMap, theMarker, popups) {
+export function closeMarkerAndPopUps(map, currentImageMap, theMarker, popups) {
     //house keeping
     map.removeLayer(currentImageMap);
     //Close Previous Markers
@@ -73,7 +80,7 @@ function closeMarkerAndPopUps(map, currentImageMap, theMarker, popups) {
  * @param {*} map 
  * @param {*} polylinelayer 
  */
-function removeLayers(map, polylinelayer) {
+export function removeLayers(map, polylinelayer) {
     if (polylinelayer != undefined) {
         polylinelayer.forEach(layer => {
             map.removeLayer(layer);
@@ -85,27 +92,27 @@ function removeLayers(map, polylinelayer) {
   * 
   * @param {String of Coordinate in Xi,Yi format} coordsString 
   */
-function createPolyGonArray(coordsString) {
+export function createPolyGonArray(coordsString) {
 
     var string = coordsString.split(',');
 
     // Create array of float for each pair of coordinate
     var a = string.length;
-    for (i = 0; i < a; i++) {
+    for (let i = 0; i < a; i++) {
         string[i] = parseFloat(string[i]);
     }
 
     // Initialize an array to store the new values
     var b = string.length / 2;
     var array = [];
-    for (i = 0; i < b; i++) {
+    for (let i = 0; i < b; i++) {
         array[i] = [0, 0];
     }
 
     // Create an array of array of coordinates
     var k = 0;
-    for (i = 0; i < b; i++) {
-        for (j = 0; j < 2; j++) {
+    for (let i = 0; i < b; i++) {
+        for (let j = 0; j < 2; j++) {
             array[i][j] = string[k];
             k++;
         }
@@ -120,15 +127,15 @@ function createPolyGonArray(coordsString) {
  * @param {heigt bound of the leaflet map} height 
  * @param {Original Y cordinate as received from the onClick } originalY 
  */
-function getLY(height, originalY) {
-    return height - originalY
+export function getLY(height, originalY) {
+    return height - originalY;
 }
 
 /**
  * 
  * @param {*PolyGon Points} points 
  */
-function get_polygon_centroid(points) {
+export function get_polygon_centroid(points) {
 
     var centroid = { x: 0, y: 0 };
     for (var i = 0; i < points.length; i++) {
@@ -146,7 +153,7 @@ function get_polygon_centroid(points) {
  * @param {*} p 
  * @param {*} polygon 
  */
-function pointIsInPoly(p, polygon) {
+export function pointIsInPoly(p, polygon) {
     var isInside = false;
     var minX = polygon[0][0], maxX = polygon[0][0];
     var minY = polygon[0][1], maxY = polygon[0][1];
@@ -179,14 +186,14 @@ function pointIsInPoly(p, polygon) {
  * @param {*} polygonArray 
  * @param {*} bounds 
  */
-function setPolyLineCordinate(polygonArray, bounds) {
+export function setPolyLineCordinate(polygonArray, bounds) {
     let originalPolygonArray = [...polygonArray];
     var lPolygonArray = [];
     originalPolygonArray.forEach(_coords => {
         _coords[1] = bounds[1][0] - _coords[1];
         [_coords[0], _coords[1]] = [_coords[1], _coords[0]];
         lPolygonArray.push(_coords);
-    })
+    });
 
     return originalPolygonArray;
 }
@@ -195,7 +202,7 @@ function setPolyLineCordinate(polygonArray, bounds) {
  * @param {*} data1 
  * @param {*} data2 
  */
-function compare(data1, data2) {
+export function compare(data1, data2) {
     if (data1.level > data2.level) {
         return 1;
     } else {
@@ -205,7 +212,7 @@ function compare(data1, data2) {
 /**
  * 
  */
-function createFloorMapsSelectionButtons(level, allMapData) {
+export function createFloorMapsSelectionButtons(level, allMapData) {
     let parentLevel = Math.floor(level / 10 % 10);
     const mapLevelNode = document.getElementById("mapLevelId");
 
@@ -225,13 +232,13 @@ function createFloorMapsSelectionButtons(level, allMapData) {
         btn.setAttribute("id", "bt1");
         btn.innerHTML = _data.name;
         document.getElementById("mapLevelId").appendChild(btn);
-    })
+    });
 }
 
 /**
  * 
  */
-function createFloorLevelSelectionButtons(allMapData) {
+export function createFloorLevelSelectionButtons(allMapData) {
    
     const distinctParentLevels = [...new Set(allMapData.map(_mapdata => _mapdata.parentLevel))];
     const mapLevelNode = document.getElementById("mapFloorId");
@@ -249,5 +256,5 @@ function createFloorLevelSelectionButtons(allMapData) {
         btn.setAttribute("id", "bt2");
         btn.innerHTML = "Level "+_parentLevel;
         document.getElementById("mapFloorId").appendChild(btn);
-    })
+    });
 }
