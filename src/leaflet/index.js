@@ -1,4 +1,4 @@
-import {currentVal} from "./global";
+import { currentVal } from "./global";
 import {
   loadMap,
   closeMarkerAndPopUps,
@@ -9,11 +9,10 @@ import {
   setPolyLineCordinate,
   getLY,
   get_polygon_centroid,
-  pointIsInPoly 
+  pointIsInPoly
 } from "./helper";
 
 import { config } from "./config";
-
 
 const baseurl = config.baseurl;
 const searchUrl = config.searchUrl;
@@ -107,8 +106,13 @@ try {
         resolve(allMapData);
       });
     } else {
+      var fetchHeaders = new Headers({
+        "Access-Control-Allow-Origin": "*"
+      });
       allFloorLevel.searchParams.set("eventId", eventId);
-      promise = fetch(allFloorLevel).then(resp => resp.json());
+      promise = fetch(allFloorLevel, {
+        headers: fetchHeaders
+      }).then(resp => resp.json());
     }
 
     promise
@@ -153,7 +157,10 @@ try {
         }
       })
       .then(() => {
-        if (undefined != currentVal.imageMap && map.hasLayer(currentVal.imageMap)) {
+        if (
+          undefined != currentVal.imageMap &&
+          map.hasLayer(currentVal.imageMap)
+        ) {
           closeMarkerAndPopUps(map, currentVal.imageMap, theMarker, popups);
         }
         removeLayers(map, polylinelayer);
@@ -228,35 +235,37 @@ try {
    * @param {The Title of the Room to Search} title
    */
   window.searchInMap = function searchInMap(title) {
-    let searchTerms = title.split(",");
+    if (title && "" != title) {
+      let searchTerms = title.split(",");
 
-    //Close Previous Markers
-    if (theMarker != undefined) {
-      theMarker.forEach(_marker => {
-        map.removeLayer(_marker);
+      //Close Previous Markers
+      if (theMarker != undefined) {
+        theMarker.forEach(_marker => {
+          map.removeLayer(_marker);
+        });
+      }
+
+      var areas = currentVal.mapData["area"];
+
+      const area_m = [];
+
+      searchTerms.forEach(searchTerm => {
+        //Multiple rooms with the name
+        area_m.push(
+          ...areas.filter(_area =>
+            _area["title"].toUpperCase().includes(searchTerm.toUpperCase())
+          )
+        );
       });
+      //Remove previous polyline layers
+      removeLayers(map, polylinelayer);
+
+      area_m.forEach((item, index) => {
+        delayedProjectionOfMultiplePins(item, index);
+      });
+
+      drawPathsInMap(areas);
     }
-
-    var areas = currentVal.mapData["area"];
-
-    const area_m = [];
-
-    searchTerms.forEach(searchTerm => {
-      //Multiple rooms with the name
-      area_m.push(
-        ...areas.filter(_area =>
-          _area["title"].toUpperCase().includes(searchTerm.toUpperCase())
-        )
-      );
-    });
-    //Remove previous polyline layers
-    removeLayers(map, polylinelayer);
-
-    area_m.forEach((item, index) => {
-      delayedProjectionOfMultiplePins(item, index);
-    });
-
-    drawPathsInMap(areas);
   };
   /**
    *
@@ -301,7 +310,10 @@ try {
             .openOn(map)
         );
 
-        var polyLineLArray = setPolyLineCordinate(polygonArray, currentVal.bounds);
+        var polyLineLArray = setPolyLineCordinate(
+          polygonArray,
+          currentVal.bounds
+        );
         var polyline = L.polygon(polyLineLArray, {
           color: "#78e14e",
           weight: 5,
@@ -355,7 +367,10 @@ try {
       let polygonArray = createPolyGonArray(cordsString);
       let centroid = get_polygon_centroid(polygonArray);
 
-      let latlngvalue = { lng: centroid.x, lat: currentVal.bounds[1][0] - centroid.y };
+      let latlngvalue = {
+        lng: centroid.x,
+        lat: currentVal.bounds[1][0] - centroid.y
+      };
 
       let e = { latlng: latlngvalue };
       console.log("original values " + JSON.stringify(latlngvalue));
@@ -373,7 +388,10 @@ try {
           .openPopup()
       );
 
-      var polyLineLArray = setPolyLineCordinate(polygonArray, currentVal.bounds);
+      var polyLineLArray = setPolyLineCordinate(
+        polygonArray,
+        currentVal.bounds
+      );
       var polyline = L.polygon(polyLineLArray, {
         color: "#0b88d4",
         weight: 5,
