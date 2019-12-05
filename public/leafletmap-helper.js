@@ -227,3 +227,27 @@ function createFloorMapsSelectionButtons(level, allMapData) {
         document.getElementById("mapLevelId").appendChild(btn);
     })
 }
+
+/**
+ * 
+ */
+function createFloorLevelSelectionButtons(allMapData) {
+   
+    const distinctParentLevels = [...new Set(allMapData.map(_mapdata => _mapdata.parentLevel))];
+    const mapLevelNode = document.getElementById("mapFloorId");
+
+    while (mapLevelNode.firstChild) {
+        mapLevelNode.removeChild(mapLevelNode.firstChild);
+    }
+
+
+    distinctParentLevels.forEach(_parentLevel => {
+        var btn = document.createElement("button");
+        btn.setAttribute("type", "submit");
+        btn.setAttribute("onclick", "openFloorMap(" + _parentLevel + "0)");
+        btn.setAttribute("class", "btn btn-default");
+        btn.setAttribute("id", "bt2");
+        btn.innerHTML = "Level "+_parentLevel;
+        document.getElementById("mapFloorId").appendChild(btn);
+    })
+}

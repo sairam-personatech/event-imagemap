@@ -91,6 +91,8 @@ try {
          console.log("searchData " + data);
          allMapData = data;
 
+         createFloorLevelSelectionButtons(allMapData);
+
          let autoCompleteData = allMapData.map(mapData => {
             let areas = mapData.area;
             areas.level = mapData.level;
