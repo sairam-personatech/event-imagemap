@@ -30,7 +30,7 @@
   </head>
   <body class="hasOverlay pt-smooth">
     <div class="pt-showMenu pt-smooth">
-      <span>choose maps</span>
+      <span>select maps</span>
     </div>
     <div class="pt-mapSelectedData text-center">
       <ul class="list-inline">
@@ -54,22 +54,22 @@
             </li>
             <li>
               <div class="pt-inputGroup">
-                    <input
-                      type="text"
-                      id="searchStringComma"
-                      placeholder="Search in below map"
-                      name="searchComa"
-                      class="pt-formControl pt-smooth"
-                    />
-                    <button
-                      type="submit"
-                      id="searchInMapId"
-                      onclick="searchInMap(document.getElementById('searchStringComma').value)"
-                      class="pt-mapBtn pt-smooth pt-searchBtn"
-                    >
-                      Submit
-                    </button>
-                  </div>
+                <input
+                  type="text"
+                  id="searchStringComma"
+                  placeholder="Search in below map"
+                  name="searchComa"
+                  class="pt-formControl pt-smooth"
+                />
+                <button
+                  type="submit"
+                  id="searchInMapId"
+                  onclick="searchInMap(document.getElementById('searchStringComma').value)"
+                  class="pt-mapBtn pt-smooth pt-searchBtn"
+                >
+                  Submit
+                </button>
+              </div>
             </li>
           </ul>
         </div>
@@ -109,10 +109,10 @@
       function openOptions() {
         $("body").on("click", ".pt-showMenu > span", function() {
           var text = $(this).text();
-          if (text === "choose maps") {
+          if (text === "select maps") {
             $(this).text("hide options");
           } else {
-            $(this).text("choose maps");
+            $(this).text("select maps");
           }
           $(this)
             .parent(".pt-showMenu")
@@ -121,6 +121,12 @@
           $(".pt-mapTopNav").toggleClass("open");
         });
       }
+
+      (function addActiveClass() {
+        $("#bt4floor").click(function() {
+          $(".#bt4floor").addClass("active");
+        });
+      });
     });
   </script>
 </html>
