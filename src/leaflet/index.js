@@ -91,9 +91,18 @@ try {
     searchTermParam
   ) {
     let promise;
+    let localStorageMapdata;
+    try {
+      localStorageMapdata = localStorage.getItem("allMapData");
+    } catch (e) {}
+
     if (allMapData.length > 0) {
       promise = new Promise(function(resolve, reject) {
         resolve(allMapData);
+      });
+    } else if (undefined != localStorageMapdata) {
+      promise = new Promise(function(resolve, reject) {
+        resolve(JSON.parse(localStorageMapdata));
       });
     } else {
       var fetchHeaders = new Headers({
@@ -108,9 +117,13 @@ try {
     promise
       .then(function(data) {
         console.log("searchData " + data);
+        try {
+          localStorage.setItem("allMapData", JSON.stringify(data));
+        } catch (e) {}
+        
         allMapData = data;
 
-        createFloorLevelSelectionButtons(maplevel,allMapData);
+        createFloorLevelSelectionButtons(maplevel, allMapData);
 
         let autoCompleteData = allMapData
           .map(mapData => {
@@ -349,9 +362,9 @@ try {
   }
 
   /**
-   * 
-   * @param {*} item 
-   * @param {*} index 
+   *
+   * @param {*} item
+   * @param {*} index
    */
   function delayedProjectionOfMultiplePins(item, index) {
     setTimeout(function() {
@@ -405,7 +418,7 @@ try {
     //Dynamically create the Floor Map Selection
     createFloorMapsSelectionButtons(level, allMapData);
     //set the currently loaded map level
-    openLevelMap(level,searhTerm);
+    openLevelMap(level, searhTerm);
   };
   /**
    *
@@ -429,7 +442,7 @@ try {
       maplevel = 10;
       imageUrl = defaultImageUrl;
     }
-  
+
     renderMap(
       urlParams.get("eventId"),
       undefined,
