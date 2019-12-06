@@ -45,9 +45,6 @@ export function loadMap(map, maplevel, allMapData, imageUrlParam) {
   currentVal.imageMap = L.imageOverlay(imageUrl, currentVal.bounds).addTo(map);
 
   map.fitBounds(currentVal.bounds);
-  //map.fitBounds(bounds).setZoom(-2);
-
-  //console.log(mapData);
 }
 
 /**
@@ -235,7 +232,12 @@ export function createFloorMapsSelectionButtons(level, allMapData) {
     var btn = document.createElement("button");
     btn.setAttribute("type", "submit");
     btn.setAttribute("onclick", "openLevelMap(" + _data.level + ")");
-    btn.setAttribute("class", "pt-mapBtn pt-smoooth hasClick");
+
+    if (_data.level == level) {
+      btn.setAttribute("class", "pt-mapBtn pt-smoooth hasClick active");
+    } else {
+      btn.setAttribute("class", "pt-mapBtn pt-smoooth hasClick");
+    }
     btn.setAttribute("id", "bt1");
     btn.innerHTML = _data.name;
     document.getElementById("mapLevelId").appendChild(btn);
@@ -245,7 +247,15 @@ export function createFloorMapsSelectionButtons(level, allMapData) {
 /**
  *
  */
-export function createFloorLevelSelectionButtons(allMapData) {
+export function createFloorLevelSelectionButtons(
+  selectedfloorLevel,
+  allMapData
+) {
+  if (undefined == selectedfloorLevel) {
+    //load default level1 map
+    selectedfloorLevel = 10;
+  }
+  let selectedMapParent = Math.floor((selectedfloorLevel / 10) % 10);
   const distinctParentLevels = [
     ...new Set(allMapData.map(_mapdata => _mapdata.parentLevel))
   ];
@@ -259,9 +269,29 @@ export function createFloorLevelSelectionButtons(allMapData) {
     var btn = document.createElement("button");
     btn.setAttribute("type", "submit");
     btn.setAttribute("onclick", "openFloorMap(" + _parentLevel + "0)");
-    btn.setAttribute("class", "pt-mapBtn pt-smoooth hasClick");
-    btn.setAttribute("id", "bt2");
+    if (_parentLevel == selectedMapParent) {
+      btn.setAttribute("class", "pt-mapBtn pt-smoooth hasClick active");
+    } else {
+      btn.setAttribute("class", "pt-mapBtn pt-smoooth hasClick");
+    }
+    btn.setAttribute("id", "bt4floor" + _parentLevel);
     btn.innerHTML = "Level " + _parentLevel;
     document.getElementById("mapFloorId").appendChild(btn);
   });
+}
+
+/**
+ * 
+ * @param {*} level 
+ */
+export function renderSelectedMapName(level) {
+  if (undefined == level) {
+    //load default level1 map
+    level = 10;
+  }
+  let parentLevel = Math.floor((level / 10) % 10);
+  let mapName = currentVal.mapData.name;
+  document.getElementsByClassName("pt-selectedFloor")[0].innerHTML =
+    "Level " + parentLevel;
+  document.getElementsByClassName("pt-selectedMap")[0].innerHTML = mapName;
 }

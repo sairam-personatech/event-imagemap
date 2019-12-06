@@ -5,6 +5,7 @@ import {
   removeLayers,
   createFloorLevelSelectionButtons,
   createFloorMapsSelectionButtons,
+  renderSelectedMapName,
   createPolyGonArray,
   setPolyLineCordinate,
   getLY,
@@ -22,21 +23,11 @@ const defaultImageUrl = config.defaultImageUrl;
 const imageUrlbaseName = config.imageUrlbaseName;
 
 let allFloorLevel = new URL(allFloorLevelUrl);
-// let bounds = [
-//   [0, 0],
-//   [0, 0]
-// ];
-
 var delayInMilliseconds = 500; //0.5 second
-// let currentMapLevel;
-// let currentImageMap;
-let mapUrl;
-let mapData;
 let theMarker = [];
 let popups = [];
 let polylinelayer = [];
 let urlParams;
-var autoCompleteData;
 var allMapData = [];
 
 L.Map = L.Map.extend({
@@ -73,7 +64,6 @@ try {
    *
    */
   window.onload = function() {
-    mapUrl = new URL(baseurl);
     urlParams = new URLSearchParams(window.location.search);
 
     renderMap(
@@ -120,7 +110,7 @@ try {
         console.log("searchData " + data);
         allMapData = data;
 
-        createFloorLevelSelectionButtons(allMapData);
+        createFloorLevelSelectionButtons(maplevel,allMapData);
 
         let autoCompleteData = allMapData
           .map(mapData => {
@@ -165,8 +155,7 @@ try {
         }
         removeLayers(map, polylinelayer);
         loadMap(map, maplevel, allMapData, imageUrlParam);
-        //console.log(mapData);
-
+        renderSelectedMapName(maplevel);
         if (searchTermParam != undefined) {
           searchInMap(searchTermParam);
         }
@@ -359,6 +348,11 @@ try {
     });
   }
 
+  /**
+   * 
+   * @param {*} item 
+   * @param {*} index 
+   */
   function delayedProjectionOfMultiplePins(item, index) {
     setTimeout(function() {
       // Add tasks to do
@@ -411,24 +405,7 @@ try {
     //Dynamically create the Floor Map Selection
     createFloorMapsSelectionButtons(level, allMapData);
     //set the currently loaded map level
-    currentVal.mapLevel = level;
-    let level1mapUrl = new URL(floorMaphtml);
-    let imageUrl;
-    let maplevel;
-    if (undefined != level) {
-      maplevel = level;
-      imageUrl = imageUrlbaseName + level + ".jpg";
-    } else {
-      maplevel = 10;
-      imageUrl = defaultImageUrl;
-    }
-    renderMap(
-      urlParams.get("eventId"),
-      undefined,
-      maplevel,
-      imageUrl,
-      searhTerm
-    );
+    openLevelMap(level,searhTerm);
   };
   /**
    *
@@ -437,6 +414,8 @@ try {
    */
   window.openLevelMap = function openLevelMap(level, searhTerm) {
     let level1mapUrl = new URL(floorMaphtml);
+
+    currentVal.mapLevel = level;
     let imageUrl;
     let maplevel;
     level1mapUrl.searchParams.set("eventId", urlParams.get("eventId"));
@@ -450,6 +429,7 @@ try {
       maplevel = 10;
       imageUrl = defaultImageUrl;
     }
+  
     renderMap(
       urlParams.get("eventId"),
       undefined,

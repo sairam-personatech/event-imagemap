@@ -36,11 +36,11 @@
       <ul class="list-inline">
         <li>
           <b>selected floor : </b>
-          <span class="pt-selectedFloor">level 1</span>
+          <span class="pt-selectedFloor"></span>
         </li>
         <li>
           <b>selected map : </b>
-          <span class="pt-selectedMap">exhibit hall</span>
+          <span class="pt-selectedMap"></span>
         </li>
       </ul>
     </div>
@@ -138,6 +138,12 @@
           $(".pt-mapTopNav").toggleClass("open");
         });
       }
+
+      (function addActiveClass() {
+      $("#bt4floor").click(function() {
+        $(".#bt4floor").addClass('active');
+      });
+    });
     });
   </script>
 </html>
