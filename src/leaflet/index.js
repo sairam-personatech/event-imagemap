@@ -120,7 +120,7 @@ try {
         try {
           localStorage.setItem("allMapData", JSON.stringify(data));
         } catch (e) {}
-        
+
         allMapData = data;
 
         createFloorLevelSelectionButtons(maplevel, allMapData);
@@ -456,6 +456,23 @@ try {
    * onClick of the Map Event
    */
   map.on("click", onMapClick);
+  
+  let searchAcrossLevelEvent = document.getElementById("searchString");
+  let searchInMapEvent = document.getElementById("searchStringComma");
+  
+  searchAcrossLevelEvent.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.getElementById("searchAcrossLevelId").click();
+    }
+  });
+
+  searchInMapEvent.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.getElementById("searchInMapId").click();
+    }
+  });
 } catch (e) {
   alert(e.message);
 }

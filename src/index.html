@@ -63,6 +63,7 @@
                 />
                 <button
                   type="submit"
+                  id="searchAcrossLevelId"
                   onclick="searchAcrossLevel(document.getElementById('searchString').value)"
                   class="pt-mapBtn pt-smooth pt-searchBtn"
                 >
@@ -91,6 +92,7 @@
                 />
                 <button
                   type="submit"
+                  id="searchInMapId"
                   onclick="searchInMap(document.getElementById('searchStringComma').value)"
                   class="pt-mapBtn pt-smooth pt-searchBtn"
                 >
@@ -138,12 +140,6 @@
           $(".pt-mapTopNav").toggleClass("open");
         });
       }
-
-      (function addActiveClass() {
-      $("#bt4floor").click(function() {
-        $(".#bt4floor").addClass('active');
-      });
-    });
     });
   </script>
 </html>
