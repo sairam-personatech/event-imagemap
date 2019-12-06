@@ -30,7 +30,7 @@
   </head>
   <body class="hasOverlay pt-smooth">
     <div class="pt-showMenu pt-smooth">
-      <span>choose maps</span>
+      <span>select maps</span>
     </div>
     <div class="pt-mapSelectedData text-center">
       <ul class="list-inline">
@@ -126,10 +126,10 @@
       function openOptions() {
         $("body").on("click", ".pt-showMenu > span", function() {
           var text = $(this).text();
-          if (text === "choose maps") {
+          if (text === "select maps") {
             $(this).text("hide options");
           } else {
-            $(this).text("choose maps");
+            $(this).text("select maps");
           }
           $(this)
             .parent(".pt-showMenu")
@@ -140,10 +140,10 @@
       }
 
       (function addActiveClass() {
-      $("#bt4floor").click(function() {
-        $(".#bt4floor").addClass('active');
+        $("#bt4floor").click(function() {
+          $(".#bt4floor").addClass("active");
+        });
       });
-    });
     });
   </script>
 </html>
