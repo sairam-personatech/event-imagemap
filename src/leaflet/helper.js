@@ -281,8 +281,8 @@ export function createFloorLevelSelectionButtons(
 }
 
 /**
- * 
- * @param {*} level 
+ *
+ * @param {*} level
  */
 export function renderSelectedMapName(level) {
   if (undefined == level) {
@@ -294,4 +294,10 @@ export function renderSelectedMapName(level) {
   document.getElementsByClassName("pt-selectedFloor")[0].innerHTML =
     "Level " + parentLevel;
   document.getElementsByClassName("pt-selectedMap")[0].innerHTML = mapName;
+}
+
+export function closeOptions() {
+  $(".pt-showMenu").toggleClass("slideDown");
+  $(".hasOverlay").toggleClass("showOverlay");
+  $(".pt-mapTopNav").toggleClass("open");
 }

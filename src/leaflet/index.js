@@ -10,7 +10,8 @@ import {
   setPolyLineCordinate,
   getLY,
   get_polygon_centroid,
-  pointIsInPoly
+  pointIsInPoly,
+  closeOptions
 } from "./helper";
 
 import { config } from "./config";
@@ -198,6 +199,7 @@ try {
    * @param {The Title of the Room to Search} title
    */
   window.searchAcrossLevel = function searchAcrossLevel(title) {
+    closeOptions();
     let searchTerms = title.split(":");
     let parentLevel = Number(searchTerms[1].trim());
     searchTerms = title.split("Level");
@@ -237,6 +239,7 @@ try {
    * @param {The Title of the Room to Search} title
    */
   window.searchInMap = function searchInMap(title) {
+    closeOptions();
     if (title && "" != title) {
       let searchTerms = title.split(",");
 
@@ -442,7 +445,7 @@ try {
       maplevel = 10;
       imageUrl = defaultImageUrl;
     }
-
+    closeOptions();
     renderMap(
       urlParams.get("eventId"),
       undefined,
@@ -459,7 +462,7 @@ try {
   
   let searchAcrossLevelEvent = document.getElementById("searchString");
   let searchInMapEvent = document.getElementById("searchStringComma");
-  
+
   searchAcrossLevelEvent.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
       event.preventDefault();
