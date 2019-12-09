@@ -54,22 +54,22 @@
             </li>
             <li>
               <div class="pt-inputGroup">
-                <input
-                  type="text"
-                  id="searchString"
-                  placeholder="Search across level"
-                  name="search"
-                  class="pt-formControl pt-smooth"
-                />
-                <button
-                  type="submit"
-                  id="searchAcrossLevelId"
-                  onclick="searchAcrossLevel(document.getElementById('searchString').value)"
-                  class="pt-mapBtn pt-smooth pt-searchBtn"
-                >
-                  Submit
-                </button>
-              </div>
+                    <input
+                      type="text"
+                      id="searchStringComma"
+                      placeholder="Search in below map"
+                      name="searchComa"
+                      class="pt-formControl pt-smooth"
+                    />
+                    <button
+                      type="submit"
+                      id="searchInMapId"
+                      onclick="searchInMap(document.getElementById('searchStringComma').value)"
+                      class="pt-mapBtn pt-smooth pt-searchBtn"
+                    >
+                      Submit
+                    </button>
+                  </div>
             </li>
           </ul>
         </div>
@@ -80,25 +80,6 @@
           <ul class="list-inline">
             <li>
               <div id="mapLevelId" class="hasBtns"></div>
-            </li>
-            <li>
-              <div class="pt-inputGroup">
-                <input
-                  type="text"
-                  id="searchStringComma"
-                  placeholder="Search in below map"
-                  name="searchComa"
-                  class="pt-formControl pt-smooth"
-                />
-                <button
-                  type="submit"
-                  id="searchInMapId"
-                  onclick="searchInMap(document.getElementById('searchStringComma').value)"
-                  class="pt-mapBtn pt-smooth pt-searchBtn"
-                >
-                  Submit
-                </button>
-              </div>
             </li>
           </ul>
         </div>
