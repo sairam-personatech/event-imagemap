@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""
+    />
+    <link
+      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+      type="text/css"
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+      integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+      crossorigin=""
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.3.0/dist/leaflet-ant-path.min.js"
+      crossorigin=""
+    ></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  </head>
+  <body class="hasOverlay pt-smooth">
+    <div class="pt-showMenu pt-smooth">
+      <span>choose maps</span>
+    </div>
+    <div class="pt-mapSelectedData text-center">
+      <ul class="list-inline">
+        <li>
+          <b>selected floor : </b>
+          <span class="pt-selectedFloor"></span>
+        </li>
+        <li>
+          <b>selected map : </b>
+          <span class="pt-selectedMap"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="pt-mapTopNav">
+      <div class="pt-mapSection">
+        <b class="pt-mapSectionTitle">Floor Levels</b>
+        <div class="pt-mapOptions">
+          <ul class="list-inline">
+            <li>
+              <div id="mapFloorId" class="hasBtns"></div>
+            </li>
+            <li>
+              <div class="pt-inputGroup">
+                <input
+                  type="text"
+                  id="searchString"
+                  placeholder="Search across level"
+                  name="search"
+                  class="pt-formControl pt-smooth"
+                />
+                <button
+                  type="submit"
+                  id="searchAcrossLevelId"
+                  onclick="searchAcrossLevel(document.getElementById('searchString').value)"
+                  class="pt-mapBtn pt-smooth pt-searchBtn"
+                >
+                  Submit
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="pt-mapSection">
+        <b class="pt-mapSectionTitle">Floor Maps</b>
+        <div class="pt-mapOptions">
+          <ul class="list-inline">
+            <li>
+              <div id="mapLevelId" class="hasBtns"></div>
+            </li>
+            <li>
+              <div class="pt-inputGroup">
+                <input
+                  type="text"
+                  id="searchStringComma"
+                  placeholder="Search in below map"
+                  name="searchComa"
+                  class="pt-formControl pt-smooth"
+                />
+                <button
+                  type="submit"
+                  id="searchInMapId"
+                  onclick="searchInMap(document.getElementById('searchStringComma').value)"
+                  class="pt-mapBtn pt-smooth pt-searchBtn"
+                >
+                  Submit
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="pt-mapView">
+      <div id="map" style="width:400; height: 750px;"></div>
+    </div>
+  </body>
+  <script>
+    $(document).ready(function() {
+      clickCheck();
+      openOptions();
+
+      function clickCheck() {
+        $("body").on("click", ".hasClick", function() {
+          $(this)
+            .parents("ul")
+            .find("li.active")
+            .removeClass("active");
+          $(this)
+            .parent("li")
+            .addClass("active");
+        });
+      }
+
+      function openOptions() {
+        $("body").on("click", ".pt-showMenu > span", function() {
+          var text = $(this).text();
+          if (text === "choose maps") {
+            $(this).text("hide options");
+          } else {
+            $(this).text("choose maps");
+          }
+          $(this)
+            .parent(".pt-showMenu")
+            .toggleClass("slideDown");
+          $(".hasOverlay").toggleClass("showOverlay");
+          $(".pt-mapTopNav").toggleClass("open");
+        });
+      }
+    });
+  </script>
+</html>
