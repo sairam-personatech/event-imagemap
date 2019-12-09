@@ -217,6 +217,8 @@ try {
     );
     let foundMapLevelToSearch;
     let titleToSearch;
+    let centroid;
+
     filteredMapdata.forEach(_data => {
       let areas = _data.area;
 
@@ -226,6 +228,10 @@ try {
       if (filteredAreas.length > 0) {
         foundMapLevelToSearch = _data;
         titleToSearch = filteredAreas[0].title;
+
+        let polygonArray = createPolyGonArray(filteredAreas[0].coords);
+        centroid = get_polygon_centroid(polygonArray);
+
         return;
       }
     });
@@ -233,6 +239,13 @@ try {
     removeLayers(map, polylinelayer);
 
     openFloorMap(foundMapLevelToSearch.level, titleToSearch);
+
+    let latlngvalue = {
+      lng: centroid.x,
+      lat: currentVal.bounds[1][0] - centroid.y
+    };
+
+    map.setView(latlngvalue, 0);
   };
   /**
    *
