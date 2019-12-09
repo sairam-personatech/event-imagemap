@@ -308,7 +308,7 @@ try {
             .setLatLng(e.latlng)
             .setContent(item["title"] + "\n" + item["coords"])
             .setContent(
-              "<html><head><title>Page Title</title></head><body><h4>" +
+              "<html><head><title></title></head><body><h4>" +
                 item["title"] +
                 "</h4></body></html>"
             )
@@ -390,7 +390,7 @@ try {
         L.marker(latlngvalue)
           .addTo(map)
           .bindPopup(
-            "<html><head><title>Page Title</title></head><body><h4>" +
+            "<html><head><title></title></head><body><h4>" +
               item["title"] +
               "</h4></body></html>",
             { maxWidth: 10 }

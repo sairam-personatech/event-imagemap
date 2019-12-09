@@ -300,4 +300,8 @@ export function closeOptions() {
   $(".pt-showMenu").toggleClass("slideDown");
   $(".hasOverlay").toggleClass("showOverlay");
   $(".pt-mapTopNav").toggleClass("open");
+  var text = $('.pt-showMenu > span');
+  if (text.text() === 'hide options'){
+    text.text('choose maps'); 
+  }
 }
