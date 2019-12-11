@@ -473,15 +473,7 @@ try {
    */
   map.on("click", onMapClick);
   
-  let searchAcrossLevelEvent = document.getElementById("searchString");
   let searchInMapEvent = document.getElementById("searchStringComma");
-
-  searchAcrossLevelEvent.addEventListener("keyup", function(event) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      document.getElementById("searchAcrossLevelId").click();
-    }
-  });
 
   searchInMapEvent.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
