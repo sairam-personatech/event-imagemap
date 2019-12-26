@@ -32,7 +32,7 @@ let urlParams;
 var allMapData = [];
 
 L.Map = L.Map.extend({
-  openPopup: function(popup, latlng, options) {
+  openPopup: function (popup, latlng, options) {
     if (!(popup instanceof L.Popup)) {
       var content = popup;
 
@@ -64,7 +64,7 @@ try {
   /**
    *
    */
-  window.onload = function() {
+  window.onload = function () {
     urlParams = new URLSearchParams(window.location.search);
 
     renderMap(
@@ -95,14 +95,14 @@ try {
     let localStorageMapdata;
     try {
       localStorageMapdata = localStorage.getItem("allMapData");
-    } catch (e) {}
+    } catch (e) { }
 
     if (allMapData.length > 0) {
-      promise = new Promise(function(resolve, reject) {
+      promise = new Promise(function (resolve, reject) {
         resolve(allMapData);
       });
     } else if (undefined != localStorageMapdata) {
-      promise = new Promise(function(resolve, reject) {
+      promise = new Promise(function (resolve, reject) {
         resolve(JSON.parse(localStorageMapdata));
       });
     } else {
@@ -116,11 +116,11 @@ try {
     }
 
     promise
-      .then(function(data) {
+      .then(function (data) {
         console.log("searchData " + data);
         try {
           localStorage.setItem("allMapData", JSON.stringify(data));
-        } catch (e) {}
+        } catch (e) { }
 
         allMapData = data;
 
@@ -147,7 +147,13 @@ try {
       .then(allMapData => {
         if (searchRoom != undefined) {
           let foundMapLevel;
-          allMapData.forEach(mapData => {
+          let dataToSearch;
+          if (maplevel != undefined) {
+              dataToSearch = allMapData.filter(mapData => maplevel == mapData.parentLevel);
+          } else {
+            dataToSearch=allMapData;
+          }
+          dataToSearch.forEach(mapData => {
             let areas = mapData.area;
             let found = areas.filter(_area =>
               _area["title"].toUpperCase().includes(searchRoom.toUpperCase())
@@ -174,7 +180,7 @@ try {
           searchInMap(searchTermParam);
         }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -184,7 +190,7 @@ try {
    * @param {*} autoCompleteData
    */
   function autoComplete(autoCompleteData) {
-    $(function() {
+    $(function () {
       $("#searchString").autocomplete({
         source: autoCompleteData
 
@@ -322,8 +328,8 @@ try {
             .setContent(item["title"] + "\n" + item["coords"])
             .setContent(
               "<html><head><title></title></head><body><h4>" +
-                item["title"] +
-                "</h4></body></html>"
+              item["title"] +
+              "</h4></body></html>"
             )
             .openOn(map)
         );
@@ -383,7 +389,7 @@ try {
    * @param {*} index
    */
   function delayedProjectionOfMultiplePins(item, index) {
-    setTimeout(function() {
+    setTimeout(function () {
       // Add tasks to do
       let cordsString = item["coords"];
 
@@ -404,8 +410,8 @@ try {
           .addTo(map)
           .bindPopup(
             "<html><head><title></title></head><body><h4>" +
-              item["title"] +
-              "</h4></body></html>",
+            item["title"] +
+            "</h4></body></html>",
             { maxWidth: 10 }
           )
           .openPopup()
@@ -472,10 +478,10 @@ try {
    * onClick of the Map Event
    */
   map.on("click", onMapClick);
-  
+
   let searchInMapEvent = document.getElementById("searchStringComma");
 
-  searchInMapEvent.addEventListener("keyup", function(event) {
+  searchInMapEvent.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
       event.preventDefault();
       document.getElementById("searchInMapId").click();
