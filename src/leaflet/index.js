@@ -101,7 +101,7 @@ try {
       promise = new Promise(function (resolve, reject) {
         resolve(allMapData);
       });
-    } else if (undefined != localStorageMapdata) {
+    } else if (localStorageMapdata != null && localStorageMapdata != undefined) {
       promise = new Promise(function (resolve, reject) {
         resolve(JSON.parse(localStorageMapdata));
       });
@@ -112,14 +112,17 @@ try {
       allFloorLevel.searchParams.set("eventId", eventId);
       promise = fetch(allFloorLevel, {
         headers: fetchHeaders
-      }).then(resp => resp.json());
+      }).then(resp =>
+         resp.json());
     }
 
     promise
       .then(function (data) {
         console.log("searchData " + data);
         try {
-          localStorage.setItem("allMapData", JSON.stringify(data));
+          if (data.length != undefined && data.length != 0) {
+            localStorage.setItem("allMapData", JSON.stringify(data));
+          }
         } catch (e) { }
 
         allMapData = data;
@@ -149,9 +152,9 @@ try {
           let foundMapLevel;
           let dataToSearch;
           if (maplevel != undefined) {
-              dataToSearch = allMapData.filter(mapData => maplevel == mapData.parentLevel);
+            dataToSearch = allMapData.filter(mapData => maplevel == mapData.parentLevel);
           } else {
-            dataToSearch=allMapData;
+            dataToSearch = allMapData;
           }
           dataToSearch.forEach(mapData => {
             let areas = mapData.area;
