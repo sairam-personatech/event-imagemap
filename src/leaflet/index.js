@@ -16,10 +16,7 @@ import {
 
 import { config } from "./config";
 
-const baseurl = config.baseurl;
-const searchUrl = config.searchUrl;
 const allFloorLevelUrl = config.allFloorLevelUrl;
-const floorMaphtml = config.floorMaphtml;
 const defaultImageUrl = config.defaultImageUrl;
 const imageUrlbaseName = config.imageUrlbaseName;
 
@@ -32,7 +29,7 @@ let urlParams;
 var allMapData = [];
 
 L.Map = L.Map.extend({
-  openPopup: function (popup, latlng, options) {
+  openPopup: function(popup, latlng, options) {
     if (!(popup instanceof L.Popup)) {
       var content = popup;
 
@@ -64,7 +61,7 @@ try {
   /**
    *
    */
-  window.onload = function () {
+  window.onload = function() {
     urlParams = new URLSearchParams(window.location.search);
 
     renderMap(
@@ -95,14 +92,17 @@ try {
     let localStorageMapdata;
     try {
       localStorageMapdata = localStorage.getItem("allMapData");
-    } catch (e) { }
+    } catch (e) {}
 
     if (allMapData.length > 0) {
-      promise = new Promise(function (resolve, reject) {
+      promise = new Promise(function(resolve, reject) {
         resolve(allMapData);
       });
-    } else if (localStorageMapdata != null && localStorageMapdata != undefined) {
-      promise = new Promise(function (resolve, reject) {
+    } else if (
+      localStorageMapdata != null &&
+      localStorageMapdata != undefined
+    ) {
+      promise = new Promise(function(resolve, reject) {
         resolve(JSON.parse(localStorageMapdata));
       });
     } else {
@@ -112,18 +112,17 @@ try {
       allFloorLevel.searchParams.set("eventId", eventId);
       promise = fetch(allFloorLevel, {
         headers: fetchHeaders
-      }).then(resp =>
-         resp.json());
+      }).then(resp => resp.json());
     }
 
     promise
-      .then(function (data) {
+      .then(function(data) {
         console.log("searchData " + data);
         try {
           if (data.length != undefined && data.length != 0) {
             localStorage.setItem("allMapData", JSON.stringify(data));
           }
-        } catch (e) { }
+        } catch (e) {}
 
         allMapData = data;
 
@@ -152,7 +151,9 @@ try {
           let foundMapLevel;
           let dataToSearch;
           if (maplevel != undefined) {
-            dataToSearch = allMapData.filter(mapData => maplevel == mapData.parentLevel);
+            dataToSearch = allMapData.filter(
+              mapData => maplevel == mapData.parentLevel
+            );
           } else {
             dataToSearch = allMapData;
           }
@@ -177,13 +178,20 @@ try {
           closeMarkerAndPopUps(map, currentVal.imageMap, theMarker, popups);
         }
         removeLayers(map, polylinelayer);
+
+        if (imageUrlParam == undefined) {
+          imageUrlParam = defaultImageUrl;
+        } 
+        if (urlParams.get("nativeProtocol")) {
+          imageUrlParam = urlParams.get("nativeProtocol")+":/" + imageUrlParam;
+        }
         loadMap(map, maplevel, allMapData, imageUrlParam);
         renderSelectedMapName(maplevel);
         if (searchTermParam != undefined) {
           searchInMap(searchTermParam);
         }
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
   }
@@ -193,7 +201,7 @@ try {
    * @param {*} autoCompleteData
    */
   function autoComplete(autoCompleteData) {
-    $(function () {
+    $(function() {
       $("#searchString").autocomplete({
         source: autoCompleteData
 
@@ -263,7 +271,8 @@ try {
   window.searchInMap = function searchInMap(title) {
     closeOptions();
     if (title && "" != title) {
-      let searchTerms = title.split(",");
+      let term = title.trim();
+      //let searchTerms = title.split(",");
 
       //Close Previous Markers
       if (theMarker != undefined) {
@@ -276,14 +285,12 @@ try {
 
       const area_m = [];
 
-      searchTerms.forEach(searchTerm => {
-        //Multiple rooms with the name
-        area_m.push(
-          ...areas.filter(_area =>
-            _area["title"].toUpperCase().includes(searchTerm.toUpperCase())
-          )
-        );
-      });
+      //Multiple rooms with the name
+      area_m.push(
+        ...areas.filter(_area =>
+          _area["title"].toUpperCase().includes(term.toUpperCase())
+        )
+      );
       //Remove previous polyline layers
       removeLayers(map, polylinelayer);
 
@@ -331,8 +338,9 @@ try {
             .setContent(item["title"] + "\n" + item["coords"])
             .setContent(
               "<html><head><title></title></head><body><h4>" +
-              item["title"] +
-              "</h4></body></html>"
+                item["title"] +
+                "<h4><a href='https://www.w3schools.com' target='_blank'>Sponsor</a></h4>" +
+                "</h4></body></html>"
             )
             .openOn(map)
         );
@@ -392,7 +400,7 @@ try {
    * @param {*} index
    */
   function delayedProjectionOfMultiplePins(item, index) {
-    setTimeout(function () {
+    setTimeout(function() {
       // Add tasks to do
       let cordsString = item["coords"];
 
@@ -413,8 +421,9 @@ try {
           .addTo(map)
           .bindPopup(
             "<html><head><title></title></head><body><h4>" +
-            item["title"] +
-            "</h4></body></html>",
+              item["title"] +
+              "<h4><a href='https://www.w3schools.com' target='_blank'>Sponsor</a></h4>" +
+              "</h4></body></html>",
             { maxWidth: 10 }
           )
           .openPopup()
@@ -451,12 +460,11 @@ try {
    * @param {*} searhTerm
    */
   window.openLevelMap = function openLevelMap(level, searhTerm) {
-    let level1mapUrl = new URL(floorMaphtml);
-
+  
     currentVal.mapLevel = level;
     let imageUrl;
     let maplevel;
-    level1mapUrl.searchParams.set("eventId", urlParams.get("eventId"));
+
     console.log(currentVal.mapLevel);
 
     if (undefined != level) {
@@ -484,7 +492,7 @@ try {
 
   let searchInMapEvent = document.getElementById("searchStringComma");
 
-  searchInMapEvent.addEventListener("keyup", function (event) {
+  searchInMapEvent.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
       event.preventDefault();
       document.getElementById("searchInMapId").click();

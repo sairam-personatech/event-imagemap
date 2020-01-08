@@ -40,7 +40,6 @@ export function loadMap(map, maplevel, allMapData, imageUrlParam) {
   } else {
     imageUrl = defaultImageUrl;
   }
-
   createFloorMapsSelectionButtons(levelToLoad, allMapData);
   currentVal.imageMap = L.imageOverlay(imageUrl, currentVal.bounds).addTo(map);
 
@@ -278,6 +277,18 @@ export function createFloorLevelSelectionButtons(
     btn.innerHTML = "Level " + _parentLevel;
     document.getElementById("mapFloorId").appendChild(btn);
   });
+
+  let autoCompleteData = allMapData
+    .filter(mapData => mapData.level === selectedfloorLevel)
+    .map(levelMapdata => {
+      return levelMapdata.area.map(
+        area => area.title
+      );
+    }).flat();
+  let uniquetags = new Set(autoCompleteData);
+
+  console.log("unique tags "+uniquetags);
+  autoCompleteLevel(Array.from(uniquetags));
 }
 
 /**
@@ -300,8 +311,23 @@ export function closeOptions() {
   $(".pt-showMenu").toggleClass("slideDown");
   $(".hasOverlay").toggleClass("showOverlay");
   $(".pt-mapTopNav").toggleClass("open");
-  var text = $('.pt-showMenu > span');
-  if (text.text() === 'hide options'){
-    text.text('choose maps'); 
+  var text = $(".pt-showMenu > span");
+  if (text.text() === "hide options") {
+    text.text("choose maps");
   }
 }
+
+ /**
+   *
+   * @param {*} autoCompleteData
+   */
+  function autoCompleteLevel(autoCompleteData) {
+    $(function () {
+      $("#searchStringComma").autocomplete({
+        source: autoCompleteData
+
+        /* #tthe ags is the id of the input element 
+            source: tags is the list of available tags*/
+      });
+    });
+  }
