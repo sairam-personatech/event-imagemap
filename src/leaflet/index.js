@@ -339,7 +339,7 @@ try {
             .setContent(
               "<html><head><title></title></head><body><h4>" +
                 item["title"] +
-                "<h4><a href='https://www.w3schools.com' target='_blank'>Sponsor</a></h4>" +
+                "<h4><a href="+item["href"]+" target='_blank'>Sponsor</a></h4>" +
                 "</h4></body></html>"
             )
             .openOn(map)
@@ -422,7 +422,7 @@ try {
           .bindPopup(
             "<html><head><title></title></head><body><h4>" +
               item["title"] +
-              "<h4><a href='https://www.w3schools.com' target='_blank'>Sponsor</a></h4>" +
+              "<h4><a href="+item["href"]+" target='_blank'>Sponsor</a></h4>" +
               "</h4></body></html>",
             { maxWidth: 10 }
           )
