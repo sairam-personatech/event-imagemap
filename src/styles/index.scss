@@ -154,6 +154,7 @@ p {
 }
 .pt-formControl::placeholder {
   font-weight: normal;
+  color: rgba(44, 52, 71, 0.5);
 }
 .pt-formControl[disabled] {
   opacity: 1;
@@ -283,16 +284,11 @@ p {
   margin: 0px auto;
 }
 .pt-mapOptions > ul > li {
+  width: 50%;
   padding: 0px;
 }
 .pt-mapOptions > ul > li + li > .pt-mapBtn {
   border-left: none;
-}
-.pt-mapOptions > ul > li:last-child {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  z-index: 4;
 }
 .pt-mapBtn {
   position: relative;
@@ -432,26 +428,204 @@ p {
   color: #1397f1;
   margin-left: 6px;
 }
+.pt-lgVisible {
+  display: block;
+}
+.pt-xsVisible {
+  display: none;
+}
+.pt-serachOptions {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 1002;
+  padding: 16px 16px 0px;
+  background-color: #fff;
+  box-shadow: 0 -1px 17px 0 rgba(94, 107, 137, 0.2);
+  -moz-box-shadow: 0 -1px 17px 0 rgba(94, 107, 137, 0.2);
+  -webkit-box-shadow: 0 -1px 17px 0 rgba(94, 107, 137, 0.2);
+}
+.pt-searchFloor {
+  position: relative;
+}
+.pt-searchFloor.hasBackBtn {
+  margin-left: 54px;
+}
+.pt-searchFloor > .searchFloor {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  z-index: 4;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+}
+.pt-searchFloor > .pt-formControl {
+  height: 40px;
+  padding-left: 44px;
+  border-radius: 6px;
+}
+.isSearching > .pt-formControl {
+  width: 72%;
+}
+.pt-serachOptions.hasBackBtn > .pt-searchFloor {
+  margin-left: 44px;
+}
+.pt-serachOptions.hasBackBtn > .isSearching > .pt-formControl {
+  width: 66%;
+}
+.pt-searchFloor > .searchFloor > small {
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  z-index: 4;
+  right: 0px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin: -8px auto 0px;
+}
+.pt-searchFloor > .searchFloor > small:before,
+.pt-searchFloor > .searchFloor > small:after {
+  content: "";
+}
+.pt-searchFloor > .searchFloor > small:before {
+  width: 16px;
+  height: 16px;
+  display: block;
+  margin: 0px auto;
+  border-radius: 50%;
+  border: 1px solid #000;
+}
+.pt-searchFloor > .searchFloor > small:after {
+  position: absolute;
+  width: 6px;
+  right: -2px;
+  bottom: -1px;
+  transform: rotate(45deg);
+  border: 1px solid #000;
+  -moz-transform: rotate(45deg);
+  border-top-right-radius: 12px;
+  -webkit-transform: rotate(45deg);
+  border-bottom-right-radius: 12px;
+}
+.clearSearch {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  z-index: 4;
+  opacity: 0;
+  cursor: pointer;
+  font-size: 12px;
+  color: #4249c9;
+  line-height: 24px;
+  padding: 0px 16px;
+  visibility: hidden;
+  transform: scale(0);
+  margin: -12px auto 0px;
+  -moz-transform: scale(0);
+  text-transform: uppercase;
+  -webkit-transform: scale(0);
+}
+.isSearching .clearSearch {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);
+}
+.pt-floorList {
+  position: relative;
+  margin: 12px -16px 0px;
+  background-color: rgba(200, 202, 255, 0.24);
+}
+.pt-floorList > ul {
+  position: relative;
+  padding: 16px;
+  margin: 0px auto;
+  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.pt-floorList > ul::-webkit-scrollbar {
+  display: none;
+}
+.pt-floorList > ul > li {
+  padding: 0px;
+}
+.pt-floorList > ul > li + li {
+  margin-left: 12px;
+}
+.pt-floorBtn {
+  position: relative;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 24px;
+  background-color: #fff;
+  color: rgba(69, 79, 102, 0.5);
+}
+.active > .pt-floorBtn,
+.pt-floorBtn.active {
+  color: #fff;
+  background-color: #4249c9;
+}
+.pt-levelSelection {
+  position: fixed;
+  top: 164px;
+  z-index: 4;
+  right: 16px;
+  width: 60px;
+}
+.pt-levelBtn {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  border: none;
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 2px 8px 0 rgba(71, 71, 71, 0.4);
+  background-color: #fcfcfe;
+}
+.pt-levelBtn.active {
+  color: #fff;
+  background-color: #4249c9;
+}
+.pt-levelBtn + .pt-levelBtn {
+  margin: 12px auto 0px;
+}
 @media only screen and (max-width: 767px) {
+  body {
+    padding-top: 132px;
+  }
   .pt-mapTopNav {
-    top: -350px;
+    top: -390px;
   }
   .pt-showMenu.slideDown {
-    top: 318px;
+    top: 370px;
   }
   .pt-mapOptions > ul > li:last-child {
-    position: relative;
-    margin-top: 12px;
+    margin-top: 4px;
   }
   .pt-mapOptions > ul > li {
+    width: 100%;
     display: block;
   }
   .hasBtns > .pt-mapBtn {
     width: 50%;
+    margin-bottom: 8px;
+  }
+  .hasBtns > .pt-mapBtn + .pt-mapBtn {
+    border-left: 1px solid #1397f1;
   }
   .pt-mapBtn {
     height: 44px;
-    padding: 12px;
+    padding: 12px 10px;
     text-transform: uppercase;
   }
   .pt-inputGroup > .pt-formControl {
@@ -466,6 +640,43 @@ p {
   }
   .leaflet-top {
     position: fixed;
-    top: 136px;
+    top: auto;
+    left: auto;
+    right: 24px;
+    bottom: 88px;
+    border-radius: 4px;
+    background-color: #fcfcfe;
+    box-shadow: 0 2px 8px 0 rgba(71, 71, 71, 0.4);
+  }
+  .leaflet-control-zoom > a {
+    width: 44px !important;
+    height: 44px !important;
+    line-height: 40px !important;
+    background-color: #fff !important;
+  }
+  .leaflet-touch .leaflet-bar a:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  .leaflet-touch .leaflet-bar a:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+  .ui-menu {
+    max-width: calc(100% - 33px);
+    max-width: -moz-calc(100% - 33px);
+    max-width: -webkit-calc(100% - 33px);
+  }
+  .pt-lgVisible {
+    display: none;
+  }
+  .pt-xsVisible {
+    display: block;
+  }
+  .pt-mapView {
+    padding: 0px;
+    height: calc(100% - 132px);
+    height: -moz-calc(100% - 132px);
+    height: -webkit-calc(100% - 132px);
   }
 }

@@ -29,10 +29,10 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
   <body class="hasOverlay pt-smooth">
-    <div class="pt-showMenu pt-smooth">
+    <div class="pt-showMenu pt-smooth pt-lgVisible">
       <span>choose maps</span>
     </div>
-    <div class="pt-mapSelectedData text-center">
+    <div class="pt-mapSelectedData text-center pt-lgVisible">
       <ul class="list-inline">
         <li>
           <b>selected floor : </b>
@@ -44,7 +44,7 @@
         </li>
       </ul>
     </div>
-    <div class="pt-mapTopNav">
+    <div class="pt-mapTopNav pt-lgVisible">
       <div class="pt-mapSection">
         <b class="pt-mapSectionTitle">Floor Levels</b>
         <div class="pt-mapOptions">
@@ -52,7 +52,7 @@
             <li>
               <div id="mapFloorId" class="hasBtns"></div>
             </li>
-            <li>
+            <li class="text-right">
               <div class="pt-inputGroup">
                 <input
                   type="text"
@@ -81,7 +81,7 @@
             <li>
               <div id="mapLevelId" class="hasBtns"></div>
             </li>
-            <li>
+            <li class="text-right">
               <div class="pt-inputGroup">
                 <input
                   type="text"
@@ -104,6 +104,46 @@
         </div>
       </div>
     </div>
+    <div class="pt-serachOptions pt-xsVisible">
+      <div class="pt-searchFloor">
+        <span class="searchFloor"><small></small></span>
+        <input
+          type="text"
+          class="pt-formControl pt-smooth"
+          placeholder="Search Level 2 for an exhibit booth, track, etc."
+        />
+        <small class="clearSearch pt-smooth">cancel</small>
+      </div>
+      <div class="pt-floorList">
+        <ul class="list-inline">
+          <li class="active">
+            <button class="pt-floorBtn pt-smooth">Exhibit Hall</button>
+          </li>
+          <li>
+            <button class="pt-floorBtn pt-smooth">Registration</button>
+          </li>
+          <li>
+            <button class="pt-floorBtn pt-smooth">Hosted Program</button>
+          </li>
+          <li>
+            <button class="pt-floorBtn pt-smooth">Exhibit Hall</button>
+          </li>
+          <li>
+            <button class="pt-floorBtn pt-smooth">Registration</button>
+          </li>
+          <li>
+            <button class="pt-floorBtn pt-smooth">Hosted Program</button>
+          </li>
+          <li>
+            <button class="pt-floorBtn pt-smooth">breakfast</button>
+          </li>
+        </ul>
+      </div>
+      <div class="pt-levelSelection">
+        <button class="pt-levelBtn pt-smooth active">L1</button>
+        <button class="pt-levelBtn pt-smooth">L2</button>
+      </div>
+    </div>
     <div class="pt-mapView">
       <div id="map" style="width:400; height: 750px;"></div>
     </div>
@@ -112,6 +152,7 @@
     $(document).ready(function() {
       clickCheck();
       openOptions();
+      searchItDude();
 
       function clickCheck() {
         $("body").on("click", ".hasClick", function() {
@@ -138,6 +179,26 @@
             .toggleClass("slideDown");
           $(".hasOverlay").toggleClass("showOverlay");
           $(".pt-mapTopNav").toggleClass("open");
+        });
+      }
+
+      function searchItDude() {
+        $("body").on("keyup", ".pt-searchFloor > .pt-formControl", function() {
+          var $this = $(this);
+          if ($this.val().length > 3) {
+            $this.parent(".pt-searchFloor").addClass("isSearching");
+          } else if ($this.val().length <= 2) {
+            $this.parent(".pt-searchFloor").removeClass("isSearching");
+          }
+        });
+        $("body").on("click", ".clearSearch", function() {
+          $(this)
+            .parent(".pt-searchFloor")
+            .find(".pt-formControl")
+            .val("");
+          $(this)
+            .parent(".pt-searchFloor")
+            .removeClass("isSearching");
         });
       }
     });
