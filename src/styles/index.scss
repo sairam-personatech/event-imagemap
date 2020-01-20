@@ -440,7 +440,7 @@ p {
   left: 0px;
   right: 0px;
   z-index: 1002;
-  padding: 16px 16px 0px;
+  padding: 16px;
   background-color: #fff;
   box-shadow: 0 -1px 17px 0 rgba(94, 107, 137, 0.2);
   -moz-box-shadow: 0 -1px 17px 0 rgba(94, 107, 137, 0.2);
@@ -467,13 +467,12 @@ p {
   border-radius: 6px;
 }
 .isSearching > .pt-formControl {
-  width: 72%;
+  width: calc(100% - 80px);
+  width: -moz-calc(100% - 80px);
+  width: -webkit-calc(100% - 80px);
 }
 .pt-serachOptions.hasBackBtn > .pt-searchFloor {
   margin-left: 44px;
-}
-.pt-serachOptions.hasBackBtn > .isSearching > .pt-formControl {
-  width: 66%;
 }
 .pt-searchFloor > .searchFloor > small {
   position: absolute;
@@ -537,7 +536,7 @@ p {
 }
 .pt-floorList {
   position: relative;
-  margin: 12px -16px 0px;
+  margin: 12px -16px -16px;
   background-color: rgba(200, 202, 255, 0.24);
 }
 .pt-floorList > ul {
@@ -598,6 +597,42 @@ p {
 }
 .pt-levelBtn + .pt-levelBtn {
   margin: 12px auto 0px;
+}
+.pt-searchResult {
+  position: fixed;
+  left: 0px;
+  top: -100%;
+  right: 0px;
+  opacity: 0;
+  z-index: 1001;
+  overflow: hidden;
+  overflow-y: auto;
+  visibility: hidden;
+  height: calc(100% - 72px);
+  background-color: #f3f3f7;
+  height: -moz-calc(100% - 72px);
+  height: -webkit-calc(100% - 72px);
+}
+.pt-searchResult.showNav {
+  top: 72px;
+  opacity: 1;
+  visibility: visible;
+}
+.pt-searchResult > ul > li + li {
+  border-top: 1px solid rgba(44, 52, 71, 0.1);
+}
+.pt-searchItem {
+  position: relative;
+  padding: 16px;
+}
+.pt-searchItem > b,
+.pt-searchItem > span {
+  display: block;
+  font-weight: 500;
+}
+.pt-searchItem > span {
+  opacity: 0.5;
+  font-size: 12px;
 }
 @media only screen and (max-width: 767px) {
   body {

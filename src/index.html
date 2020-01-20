@@ -144,6 +144,130 @@
         <button class="pt-levelBtn pt-smooth">L2</button>
       </div>
     </div>
+    <nav class="pt-searchResult pt-xsVisible pt-smooth">
+      <ul class="list-unstyled">
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+        <li>
+          <div class="pt-searchItem">
+            <b>Google</b>
+            <span>Booth 152</span>
+          </div>
+        </li>
+      </ul>
+    </nav>
     <div class="pt-mapView">
       <div id="map" style="width:400; height: 750px;"></div>
     </div>
@@ -187,8 +311,18 @@
           var $this = $(this);
           if ($this.val().length > 3) {
             $this.parent(".pt-searchFloor").addClass("isSearching");
+            $this
+              .parents(".pt-serachOptions")
+              .find(".pt-floorList, .pt-levelSelection")
+              .hide();
+            $(".pt-searchResult").addClass("showNav");
           } else if ($this.val().length <= 2) {
             $this.parent(".pt-searchFloor").removeClass("isSearching");
+            $this
+              .parents(".pt-serachOptions")
+              .find(".pt-floorList, .pt-levelSelection")
+              .show();
+            $(".pt-searchResult").removeClass("showNav");
           }
         });
         $("body").on("click", ".clearSearch", function() {
@@ -199,6 +333,11 @@
           $(this)
             .parent(".pt-searchFloor")
             .removeClass("isSearching");
+          $(this)
+            .parents(".pt-serachOptions")
+            .find(".pt-floorList, .pt-levelSelection")
+            .show();
+          $(".pt-searchResult").removeClass("showNav");
         });
       }
     });
