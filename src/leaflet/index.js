@@ -255,6 +255,7 @@ try {
     closeOptions();
     if (title && "" != title) {
       let searchTerms = title.split(",");
+      document.getElementById("searchStringComma").value = "";
 
       //Close Previous Markers
       if (theMarker != undefined) {
@@ -472,13 +473,14 @@ try {
    * onClick of the Map Event
    */
   map.on("click", onMapClick);
-  
+
   let searchInMapEvent = document.getElementById("searchStringComma");
 
   searchInMapEvent.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
       event.preventDefault();
       document.getElementById("searchInMapId").click();
+      document.getElementById("searchStringComma").value = "";
     }
   });
 } catch (e) {

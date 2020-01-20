@@ -283,16 +283,11 @@ p {
   margin: 0px auto;
 }
 .pt-mapOptions > ul > li {
+  width: 50%;
   padding: 0px;
 }
 .pt-mapOptions > ul > li + li > .pt-mapBtn {
   border-left: none;
-}
-.pt-mapOptions > ul > li:last-child {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  z-index: 4;
 }
 .pt-mapBtn {
   position: relative;
@@ -440,7 +435,6 @@ p {
     top: 318px;
   }
   .pt-mapOptions > ul > li:last-child {
-    position: relative;
     margin-top: 12px;
   }
   .pt-mapOptions > ul > li {
