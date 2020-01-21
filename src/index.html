@@ -163,11 +163,7 @@
       function searchItDude() {
         $("body").on("keyup", ".pt-searchFloor > .pt-formControl", function() {
           var $this = $(this);
-          if ($this.val().length > 3) {
-            $this.parent(".pt-searchFloor").addClass("isSearching");
-          } else if ($this.val().length <= 2) {
-            $this.parent(".pt-searchFloor").removeClass("isSearching");
-          }
+          $this.parent(".pt-searchFloor").addClass("isSearching");
         });
         $("body").on("click", ".clearSearch", function() {
           $(this)
