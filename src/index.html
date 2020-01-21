@@ -132,6 +132,7 @@
     $(document).ready(function() {
       clickCheck();
       openOptions();
+      searchItDude();
 
       function clickCheck() {
         $("body").on("click", ".hasClick", function() {
@@ -158,6 +159,22 @@
             .toggleClass("slideDown");
           $(".hasOverlay").toggleClass("showOverlay");
           $(".pt-mapTopNav").toggleClass("open");
+        });
+      }
+
+      function searchItDude() {
+        $("body").on("keyup", ".pt-searchFloor > .pt-formControl", function() {
+          var $this = $(this);
+          $this.parent(".pt-searchFloor").addClass("isSearching");
+        });
+        $("body").on("click", ".clearSearch", function() {
+          $(this)
+            .parent(".pt-searchFloor")
+            .find(".pt-formControl")
+            .val("");
+          $(this)
+            .parent(".pt-searchFloor")
+            .removeClass("isSearching");
         });
       }
     });

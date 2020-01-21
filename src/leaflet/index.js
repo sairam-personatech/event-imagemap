@@ -210,20 +210,28 @@ try {
   function autoComplete(autoCompleteData) {
     $(function() {
       $("#searchString").autocomplete({
-        source: autoCompleteData
+        source: autoCompleteData,
 
         /* #tthe ags is the id of the input element 
             source: tags is the list of available tags*/
+
+        select: function(event, ui) {
+          searchAcrossLevel(ui.item.label);
+        }
       });
     });
 
     //Auto Complete for Mobile
     $(function() {
       $("#searchStringM").autocomplete({
-        source: autoCompleteData
+        source: autoCompleteData,
 
         /* #tthe ags is the id of the input element 
             source: tags is the list of available tags*/
+
+        select: function(event, ui) {
+          searchAcrossLevel(ui.item.label);
+        }
       });
     });
   }
