@@ -113,7 +113,7 @@ export function createPolyGonArray(coordsString) {
     }
   }
 
-  console.log(array);
+  // console.log(array);
   return array;
 }
 
@@ -177,7 +177,7 @@ export function pointIsInPoly(p, polygon) {
     ) {
       isInside = !isInside;
     }
-    console.log(isInside);
+    // console.log(isInside);
   }
 
   return isInside;
@@ -223,7 +223,6 @@ export function createFloorMapsSelectionButtons(level, allMapData) {
     mapLevelNode.removeChild(mapLevelNode.firstChild);
   }
 
-
   //for mobile
   const mapLevelNodeM = document.getElementById("mapLevelIdM");
 
@@ -252,7 +251,7 @@ export function createFloorMapsSelectionButtons(level, allMapData) {
     document.getElementById("mapLevelId").appendChild(btn);
 
     //for mobile
-    let btnLi = document.createElement("li"); 
+    let btnLi = document.createElement("li");
 
     var btnM = document.createElement("button");
     btnM.setAttribute("type", "submit");
@@ -300,7 +299,6 @@ export function createFloorLevelSelectionButtons(
   }
 
   distinctParentLevels.forEach(_parentLevel => {
-
     //for web
     var btn = document.createElement("button");
     btn.setAttribute("type", "submit");
@@ -327,19 +325,17 @@ export function createFloorLevelSelectionButtons(
     btnM.setAttribute("id", "btM4floor" + _parentLevel);
     btnM.innerHTML = "L " + _parentLevel;
     document.getElementById("mapFloorIdM").appendChild(btnM);
-
   });
 
   let autoCompleteData = allMapData
     .filter(mapData => mapData.level === selectedfloorLevel)
     .map(levelMapdata => {
-      return levelMapdata.area.map(
-        area => area.title
-      );
-    }).flat();
+      return levelMapdata.area.map(area => area.title);
+    })
+    .flat();
   let uniquetags = new Set(autoCompleteData);
 
-  console.log("unique tags "+uniquetags);
+  // console.log("unique tags " + uniquetags);
   autoCompleteLevel(Array.from(uniquetags));
 }
 
@@ -361,7 +357,7 @@ export function renderSelectedMapName(level) {
 
 export function closeOptions() {
   $(".pt-showMenu").toggleClass("slideDown");
-  $(".hasOverlay").toggleClass("showOverlay");
+  $(".hasOverlay").removeClass("showOverlay");
   $(".pt-mapTopNav").toggleClass("open");
   var text = $(".pt-showMenu > span");
   if (text.text() === "hide options") {
@@ -369,17 +365,14 @@ export function closeOptions() {
   }
 }
 
- /**
-   *
-   * @param {*} autoCompleteData
-   */
-  function autoCompleteLevel(autoCompleteData) {
-    $(function () {
-      $("#searchStringComma").autocomplete({
-        source: autoCompleteData
-
-        /* #tthe ags is the id of the input element 
-            source: tags is the list of available tags*/
-      });
+/**
+ *
+ * @param {*} autoCompleteData
+ */
+function autoCompleteLevel(autoCompleteData) {
+  $(function() {
+    $("#searchStringComma").autocomplete({
+      source: autoCompleteData
     });
-  }
+  });
+}
