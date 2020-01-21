@@ -123,7 +123,7 @@ try {
 
     promise
       .then(function(data) {
-        console.log("searchData " + data);
+        // console.log("searchData " + data);
         try {
           if (data.length != undefined && data.length != 0) {
             localStorage.setItem("allMapData", JSON.stringify(data));
@@ -199,7 +199,7 @@ try {
         }
       })
       .catch(function(error) {
-        console.log(error);
+        // console.log(error);
       });
   }
 
@@ -397,7 +397,7 @@ try {
         }).addTo(map);
         polylinelayer.push(polyline);
 
-        console.log("current zoom is " + this._zoom);
+        // console.log("current zoom is " + this._zoom);
 
         map.setView([originaly, x], 0);
         isfound = true;
@@ -453,7 +453,7 @@ try {
       };
 
       let e = { latlng: latlngvalue };
-      console.log("original values " + JSON.stringify(latlngvalue));
+      // console.log("original values " + JSON.stringify(latlngvalue));
 
       if (item.href) {
         //Save Open Markers
@@ -521,7 +521,7 @@ try {
     let imageUrl;
     let maplevel;
 
-    console.log(currentVal.mapLevel);
+    //console.log(currentVal.mapLevel);
 
     if (undefined != level) {
       //maplevel = Math.floor(currentMapLevel / 10 % 10) * 10 + level;
