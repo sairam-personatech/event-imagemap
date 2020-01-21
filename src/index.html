@@ -106,7 +106,11 @@
     </div>
     <div class="pt-serachOptions pt-xsVisible">
       <div class="pt-searchFloor">
-        <span class="searchFloor" onclick="searchAcrossLevel(document.getElementById('searchStringM').value)"><small></small></span>
+        <span
+          class="searchFloor"
+          onclick="searchAcrossLevel(document.getElementById('searchStringM').value)"
+          ><small></small
+        ></span>
         <input
           id="searchStringM"
           type="text"
@@ -116,136 +120,10 @@
         <small class="clearSearch pt-smooth">cancel</small>
       </div>
       <div class="pt-floorList">
-        <ul id="mapLevelIdM" class="list-inline">
-        </ul>
+        <ul id="mapLevelIdM" class="list-inline"></ul>
       </div>
-      <div id="mapFloorIdM" class="pt-levelSelection">
-      </div>
+      <div id="mapFloorIdM" class="pt-levelSelection"></div>
     </div>
-    <nav class="pt-searchResult pt-xsVisible pt-smooth">
-      <ul class="list-unstyled">
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-        <li>
-          <div class="pt-searchItem">
-            <b>Google</b>
-            <span>Booth 152</span>
-          </div>
-        </li>
-      </ul>
-    </nav>
     <div class="pt-mapView">
       <div id="map" style="width:400; height: 750px;"></div>
     </div>
@@ -254,7 +132,6 @@
     $(document).ready(function() {
       clickCheck();
       openOptions();
-      searchItDude();
 
       function clickCheck() {
         $("body").on("click", ".hasClick", function() {
@@ -281,41 +158,6 @@
             .toggleClass("slideDown");
           $(".hasOverlay").toggleClass("showOverlay");
           $(".pt-mapTopNav").toggleClass("open");
-        });
-      }
-
-      function searchItDude() {
-        $("body").on("keyup", ".pt-searchFloor > .pt-formControl", function() {
-          var $this = $(this);
-          if ($this.val().length > 3) {
-            $this.parent(".pt-searchFloor").addClass("isSearching");
-            $this
-              .parents(".pt-serachOptions")
-              .find(".pt-floorList, .pt-levelSelection")
-              .hide();
-            $(".pt-searchResult").addClass("showNav");
-          } else if ($this.val().length <= 2) {
-            $this.parent(".pt-searchFloor").removeClass("isSearching");
-            $this
-              .parents(".pt-serachOptions")
-              .find(".pt-floorList, .pt-levelSelection")
-              .show();
-            $(".pt-searchResult").removeClass("showNav");
-          }
-        });
-        $("body").on("click", ".clearSearch", function() {
-          $(this)
-            .parent(".pt-searchFloor")
-            .find(".pt-formControl")
-            .val("");
-          $(this)
-            .parent(".pt-searchFloor")
-            .removeClass("isSearching");
-          $(this)
-            .parents(".pt-serachOptions")
-            .find(".pt-floorList, .pt-levelSelection")
-            .show();
-          $(".pt-searchResult").removeClass("showNav");
         });
       }
     });
