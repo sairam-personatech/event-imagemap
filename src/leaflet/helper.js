@@ -216,10 +216,20 @@ export function compare(data1, data2) {
  */
 export function createFloorMapsSelectionButtons(level, allMapData) {
   let parentLevel = Math.floor((level / 10) % 10);
+  //for web
   const mapLevelNode = document.getElementById("mapLevelId");
 
   while (mapLevelNode.firstChild) {
     mapLevelNode.removeChild(mapLevelNode.firstChild);
+  }
+
+
+  //for mobile
+  const mapLevelNodeM = document.getElementById("mapLevelIdM");
+
+  //for mobile
+  while (mapLevelNodeM.firstChild) {
+    mapLevelNodeM.removeChild(mapLevelNodeM.firstChild);
   }
 
   let filteredMapdata = allMapData.filter(
@@ -240,6 +250,22 @@ export function createFloorMapsSelectionButtons(level, allMapData) {
     btn.setAttribute("id", "bt1");
     btn.innerHTML = _data.name;
     document.getElementById("mapLevelId").appendChild(btn);
+
+    //for mobile
+    let btnLi = document.createElement("li"); 
+
+    var btnM = document.createElement("button");
+    btnM.setAttribute("type", "submit");
+    btnM.setAttribute("onclick", "openLevelMap(" + _data.level + ")");
+    btnM.setAttribute("class", "pt-floorBtn pt-smooth");
+    if (_data.level == level) {
+      btnLi.setAttribute("class", "active");
+    }
+    btnM.setAttribute("id", "btM1");
+    btnM.innerHTML = _data.name;
+
+    btnLi.appendChild(btnM);
+    document.getElementById("mapLevelIdM").appendChild(btnLi);
   });
 }
 
@@ -258,13 +284,24 @@ export function createFloorLevelSelectionButtons(
   const distinctParentLevels = [
     ...new Set(allMapData.map(_mapdata => _mapdata.parentLevel))
   ];
+
+  //for web
   const mapLevelNode = document.getElementById("mapFloorId");
 
   while (mapLevelNode.firstChild) {
     mapLevelNode.removeChild(mapLevelNode.firstChild);
   }
 
+  //for mobile
+  const mapLevelNodeM = document.getElementById("mapFloorIdM");
+
+  while (mapLevelNodeM.firstChild) {
+    mapLevelNodeM.removeChild(mapLevelNodeM.firstChild);
+  }
+
   distinctParentLevels.forEach(_parentLevel => {
+
+    //for web
     var btn = document.createElement("button");
     btn.setAttribute("type", "submit");
     btn.setAttribute("onclick", "openFloorMap(" + _parentLevel + "0)");
@@ -276,6 +313,21 @@ export function createFloorLevelSelectionButtons(
     btn.setAttribute("id", "bt4floor" + _parentLevel);
     btn.innerHTML = "Level " + _parentLevel;
     document.getElementById("mapFloorId").appendChild(btn);
+
+    //for mobile
+
+    var btnM = document.createElement("button");
+    btnM.setAttribute("type", "submit");
+    btnM.setAttribute("onclick", "openFloorMap(" + _parentLevel + "0)");
+    if (_parentLevel == selectedMapParent) {
+      btnM.setAttribute("class", "pt-levelBtn pt-smooth active");
+    } else {
+      btnM.setAttribute("class", "pt-levelBtn pt-smooth");
+    }
+    btnM.setAttribute("id", "btM4floor" + _parentLevel);
+    btnM.innerHTML = "L " + _parentLevel;
+    document.getElementById("mapFloorIdM").appendChild(btnM);
+
   });
 
   let autoCompleteData = allMapData
