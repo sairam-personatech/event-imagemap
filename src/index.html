@@ -106,8 +106,9 @@
     </div>
     <div class="pt-serachOptions pt-xsVisible">
       <div class="pt-searchFloor">
-        <span class="searchFloor"><small></small></span>
+        <span class="searchFloor" onclick="searchAcrossLevel(document.getElementById('searchStringM').value)"><small></small></span>
         <input
+          id="searchStringM"
           type="text"
           class="pt-formControl pt-smooth"
           placeholder="Search Level 2 for an exhibit booth, track, etc."
@@ -115,33 +116,10 @@
         <small class="clearSearch pt-smooth">cancel</small>
       </div>
       <div class="pt-floorList">
-        <ul class="list-inline">
-          <li class="active">
-            <button class="pt-floorBtn pt-smooth">Exhibit Hall</button>
-          </li>
-          <li>
-            <button class="pt-floorBtn pt-smooth">Registration</button>
-          </li>
-          <li>
-            <button class="pt-floorBtn pt-smooth">Hosted Program</button>
-          </li>
-          <li>
-            <button class="pt-floorBtn pt-smooth">Exhibit Hall</button>
-          </li>
-          <li>
-            <button class="pt-floorBtn pt-smooth">Registration</button>
-          </li>
-          <li>
-            <button class="pt-floorBtn pt-smooth">Hosted Program</button>
-          </li>
-          <li>
-            <button class="pt-floorBtn pt-smooth">breakfast</button>
-          </li>
+        <ul id="mapLevelIdM" class="list-inline">
         </ul>
       </div>
-      <div class="pt-levelSelection">
-        <button class="pt-levelBtn pt-smooth active">L1</button>
-        <button class="pt-levelBtn pt-smooth">L2</button>
+      <div id="mapFloorIdM" class="pt-levelSelection">
       </div>
     </div>
     <div class="pt-mapView">

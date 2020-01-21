@@ -209,6 +209,16 @@ try {
             source: tags is the list of available tags*/
       });
     });
+
+    //Auto Complete for Mobile
+    $(function() {
+      $("#searchStringM").autocomplete({
+        source: autoCompleteData
+
+        /* #tthe ags is the id of the input element 
+            source: tags is the list of available tags*/
+      });
+    });
   }
 
   /**
