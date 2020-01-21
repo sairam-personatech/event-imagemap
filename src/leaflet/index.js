@@ -51,11 +51,17 @@ L.Map = L.Map.extend({
   }
 });
 
+// var map = L.map("map", {
+//   maxZoom: 10,
+//   minZoom: -2,
+//   crs: L.CRS.Simple
+// }).setView([3300, 2550], -2);
+
 var map = L.map("map", {
   maxZoom: 10,
   minZoom: -2,
   crs: L.CRS.Simple
-}).setView([3300, 2550], -2);
+}).setView([2025, 2386], -2);
 
 try {
   /**
@@ -181,9 +187,10 @@ try {
 
         if (imageUrlParam == undefined) {
           imageUrlParam = defaultImageUrl;
-        } 
+        }
         if (urlParams.get("nativeProtocol")) {
-          imageUrlParam = urlParams.get("nativeProtocol")+":/" + imageUrlParam;
+          imageUrlParam =
+            urlParams.get("nativeProtocol") + ":/" + imageUrlParam;
         }
         loadMap(map, maplevel, allMapData, imageUrlParam);
         renderSelectedMapName(maplevel);
@@ -267,12 +274,12 @@ try {
 
     openFloorMap(foundMapLevelToSearch.level, titleToSearch);
 
-    let latlngvalue = {
-      lng: centroid.x,
-      lat: currentVal.bounds[1][0] - centroid.y
-    };
+    // let latlngvalue = {
+    //   lng: centroid.x,
+    //   lat: currentVal.bounds[1][0] - centroid.y
+    // };
 
-    map.setView(latlngvalue, 0);
+    // map.setView(latlngvalue, 0);
   };
   /**
    *
@@ -342,19 +349,34 @@ try {
         //set ant path
         drawPathsInMap(areas);
 
-        popups.push(
-          L.popup({ maxWidth: 10 })
-            .setLatLng(e.latlng)
-            .setContent(item["title"] + "\n" + item["coords"])
-            .setContent(
-              "<html><head><title></title></head><body><h4>" +
-                item["title"] +
-                "<h4><a href="+item["href"]+" target='_blank'>Sponsor</a></h4>" +
-                "</h4></body></html>"
-            )
-            .openOn(map)
-        );
-
+        if (item.href) {
+          popups.push(
+            L.popup({ maxWidth: 10 })
+              .setLatLng(e.latlng)
+              .setContent(item["title"] + "\n" + item["coords"])
+              .setContent(
+                "<html><head><title></title></head><body><h4>" +
+                  item["title"] +
+                  "<h4><a href=" +
+                  item["href"] +
+                  " target='_blank'>Sponsor</a></h4>" +
+                  "</h4></body></html>"
+              )
+              .openOn(map)
+          );
+        } else {
+          popups.push(
+            L.popup({ maxWidth: 10 })
+              .setLatLng(e.latlng)
+              .setContent(item["title"] + "\n" + item["coords"])
+              .setContent(
+                "<html><head><title></title></head><body><h4>" +
+                  item["title"] +
+                  "</h4></body></html>"
+              )
+              .openOn(map)
+          );
+        }
         var polyLineLArray = setPolyLineCordinate(
           polygonArray,
           currentVal.bounds
@@ -425,19 +447,36 @@ try {
       let e = { latlng: latlngvalue };
       console.log("original values " + JSON.stringify(latlngvalue));
 
-      //Save Open Markers
-      theMarker.push(
-        L.marker(latlngvalue)
-          .addTo(map)
-          .bindPopup(
-            "<html><head><title></title></head><body><h4>" +
-              item["title"] +
-              "<h4><a href="+item["href"]+" target='_blank'>Sponsor</a></h4>" +
-              "</h4></body></html>",
-            { maxWidth: 10 }
-          )
-          .openPopup()
-      );
+      if (item.href) {
+        //Save Open Markers
+        theMarker.push(
+          L.marker(latlngvalue)
+            .addTo(map)
+            .bindPopup(
+              "<html><head><title></title></head><body><h4>" +
+                item["title"] +
+                "<h4><a href=" +
+                item["href"] +
+                " target='_blank'>Sponsor</a></h4>" +
+                "</h4></body></html>",
+              { maxWidth: 10 }
+            )
+            .openPopup()
+        );
+      } else {
+        //Save Open Markers
+        theMarker.push(
+          L.marker(latlngvalue)
+            .addTo(map)
+            .bindPopup(
+              "<html><head><title></title></head><body><h4>" +
+                item["title"] +
+                "</h4></body></html>",
+              { maxWidth: 10 }
+            )
+            .openPopup()
+        );
+      }
 
       var polyLineLArray = setPolyLineCordinate(
         polygonArray,
@@ -470,7 +509,6 @@ try {
    * @param {*} searhTerm
    */
   window.openLevelMap = function openLevelMap(level, searhTerm) {
-  
     currentVal.mapLevel = level;
     let imageUrl;
     let maplevel;
