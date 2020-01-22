@@ -1,5 +1,5 @@
 export const config = {
-    allFloorLevelUrl : 'http://localhost:8000/public/imagemap/getAll',
+    allFloorLevelUrl : 'https://console.staging.shoptalk.com/api/public/imagemap/getAll',
     defaultImageUrl : '/public/FLOORPLAN10.jpg',
     imageUrlbaseName : '/public/FLOORPLAN'
 };
