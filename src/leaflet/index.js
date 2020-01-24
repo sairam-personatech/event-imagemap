@@ -70,6 +70,10 @@ try {
   window.onload = function() {
     urlParams = new URLSearchParams(window.location.search);
 
+    if(urlParams.get("backButton")){
+      document.getElementsByClassName("pt-searchFloor")[0].classList.add("hasBackBtn");
+    }
+
     renderMap(
       urlParams.get("eventId"),
       urlParams.get("searchRoom"),
