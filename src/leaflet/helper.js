@@ -40,10 +40,13 @@ export function loadMap(map, maplevel, allMapData, imageUrlParam) {
   } else {
     imageUrl = defaultImageUrl;
   }
+  console.log(currentVal);
   createFloorMapsSelectionButtons(levelToLoad, allMapData);
   currentVal.imageMap = L.imageOverlay(imageUrl, currentVal.bounds).addTo(map);
 
   map.fitBounds(currentVal.bounds);
+  //map.invalidateSize();
+  //map.setView(currentVal.bounds);
 }
 
 /**

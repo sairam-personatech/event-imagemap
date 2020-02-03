@@ -57,11 +57,24 @@ L.Map = L.Map.extend({
 //   crs: L.CRS.Simple
 // }).setView([3300, 2550], -2);
 
+// var map = L.map("map", {
+//   maxZoom: 10,
+//   minZoom: -2,
+//   crs: L.CRS.Simple
+// }).setView([2025, 2386], -2);
+
+// var map = L.map("map", {
+//   maxZoom: 20,
+//   minZoom: -1,
+//   crs: L.CRS.Simple
+// }).setView([2025, 2386]);
+
 var map = L.map("map", {
   maxZoom: 10,
-  minZoom: -2,
+  minZoom: -3,
   crs: L.CRS.Simple
-}).setView([2025, 2386], -2);
+}).setView([2025, 2386], -3);
+
 
 try {
   /**
@@ -116,6 +129,13 @@ try {
         resolve(JSON.parse(localStorageMapdata));
       });
     } else {
+      // const myInit = {
+      //   method: 'HEAD',
+      //   mode: 'no-cors',
+      // };
+      // const myRequest = new Request(testURL, myInit);
+
+
       var fetchHeaders = new Headers({
         "Access-Control-Allow-Origin": "*"
       });
@@ -285,13 +305,6 @@ try {
     removeLayers(map, polylinelayer);
 
     openFloorMap(foundMapLevelToSearch.level, titleToSearch);
-
-    // let latlngvalue = {
-    //   lng: centroid.x,
-    //   lat: currentVal.bounds[1][0] - centroid.y
-    // };
-
-    // map.setView(latlngvalue, 0);
   };
   /**
    *
@@ -327,7 +340,7 @@ try {
         delayedProjectionOfMultiplePins(item, index);
       });
 
-      drawPathsInMap(areas);
+      //drawPathsInMap(areas);
     }
   };
   /**
@@ -359,7 +372,7 @@ try {
         }
 
         //set ant path
-        drawPathsInMap(areas);
+        //drawPathsInMap(areas);
 
         if (item.href) {
           popups.push(
@@ -403,7 +416,7 @@ try {
 
         // console.log("current zoom is " + this._zoom);
 
-        map.setView([originaly, x], 0);
+        map.setView([originaly-200, x], 0);
         isfound = true;
         break;
       }
@@ -457,6 +470,9 @@ try {
       };
 
       let e = { latlng: latlngvalue };
+
+      var originaly = centroid.y;
+      var x = centroid.x;
       // console.log("original values " + JSON.stringify(latlngvalue));
 
       if (item.href) {
@@ -501,8 +517,19 @@ try {
         smoothFactor: 1
       }).addTo(map);
       polylinelayer.push(polyline);
-      map.setView(latlngvalue, 0);
+      //map.setView([originaly+100, x], 0);
+      //map.setView(latlngvalue, 0);
+      //map.setView(latlngvalue);//working
+      map.setView([originaly-700, x]); // working
+      //map.setView([originaly-250, x]);
+      //map.setView([originaly, x]);
+      //map.setZoom(0);
+      //map.setView(latlngvalue,2);
       //Delay for animation
+
+      //map.panTo(new L.LatLng(originaly, x));//working
+      //map.flyTo(new L.LatLng(originaly, x));
+      //map.fitBounds(polyline);
     }, delayInMilliseconds * index);
   }
 
