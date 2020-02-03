@@ -70,11 +70,10 @@ L.Map = L.Map.extend({
 // }).setView([2025, 2386]);
 
 var map = L.map("map", {
-  maxZoom: 10,
+  maxZoom: 3,
   minZoom: -3,
   crs: L.CRS.Simple
 }).setView([2025, 2386], -3);
-
 
 try {
   /**
@@ -83,8 +82,10 @@ try {
   window.onload = function() {
     urlParams = new URLSearchParams(window.location.search);
 
-    if(urlParams.get("backButton")){
-      document.getElementsByClassName("pt-searchFloor")[0].classList.add("hasBackBtn");
+    if (urlParams.get("backButton")) {
+      document
+        .getElementsByClassName("pt-searchFloor")[0]
+        .classList.add("hasBackBtn");
     }
 
     renderMap(
@@ -113,6 +114,7 @@ try {
   ) {
     let promise;
     let localStorageMapdata;
+
     try {
       localStorageMapdata = localStorage.getItem("allMapData");
     } catch (e) {}
@@ -134,7 +136,6 @@ try {
       //   mode: 'no-cors',
       // };
       // const myRequest = new Request(testURL, myInit);
-
 
       var fetchHeaders = new Headers({
         "Access-Control-Allow-Origin": "*"
@@ -304,6 +305,25 @@ try {
 
     removeLayers(map, polylinelayer);
 
+    // renderMap(
+    //   urlParams.get("eventId"),
+    //   titleToSearch,
+    //   foundMapLevelToSearch.level,
+    //   undefined,
+    //   undefined
+    // );
+
+    //Refresh Map Conatiner
+    document.getElementById("mapContainer").innerHTML =
+      "<div id='map' style='width:400; height: 750px;'></div>";
+
+    map = undefined;
+    map = L.map("map", {
+      maxZoom: 3,
+      minZoom: -3,
+      crs: L.CRS.Simple
+    }).setView([2025, 2386], -3);
+
     openFloorMap(foundMapLevelToSearch.level, titleToSearch);
   };
   /**
@@ -416,7 +436,7 @@ try {
 
         // console.log("current zoom is " + this._zoom);
 
-        map.setView([originaly-200, x], 0);
+        map.setView([originaly - 200, x], 0);
         isfound = true;
         break;
       }
@@ -518,9 +538,9 @@ try {
       }).addTo(map);
       polylinelayer.push(polyline);
       //map.setView([originaly+100, x], 0);
-      //map.setView(latlngvalue, 0);
+      map.setView(latlngvalue, 0);
       //map.setView(latlngvalue);//working
-      map.setView([originaly-700, x]); // working
+      //map.setView([originaly-700, x]); // working
       //map.setView([originaly-250, x]);
       //map.setView([originaly, x]);
       //map.setZoom(0);
