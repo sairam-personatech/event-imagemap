@@ -55,19 +55,34 @@ export function loadMap(map, maplevel, allMapData, imageUrlParam) {
 
   switch (levelToLoad) {
     case 10:
-      map.flyTo([originaly, x], -1);
+      map.flyTo([originaly, x], -1, {
+        animate: true,
+        duration: 1 // in seconds
+      });
       break;
     case 11:
-      map.flyTo([originaly, x], -1);
+      map.flyTo([originaly, x], -1, {
+        animate: true,
+        duration: 1 // in seconds
+      });
       break;
     case 20:
-      map.flyTo([originaly-200, x+100], -1);
+      map.flyTo([originaly-200, x+100], -1, {
+        animate: true,
+        duration: 1 // in seconds
+      });
       break;
     case 30:
-      map.flyTo([originaly-400, x+500], 0);
+      map.flyTo([originaly-400, x+500], 0), {
+        animate: true,
+        duration: 1 // in seconds
+      };
       break;
     default:
-      map.flyTo([originaly, x], -1);
+      map.flyTo([originaly, x], -1, {
+        animate: true,
+        duration: 1 // in seconds
+      });
   }
 
   //map.setMaxBounds(currentVal.bounds);
