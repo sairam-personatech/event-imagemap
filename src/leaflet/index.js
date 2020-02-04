@@ -127,7 +127,7 @@ try {
     let localStorageMapdata;
 
     try {
-      localStorageMapdata = localStorage.getItem("allMapData");
+      //localStorageMapdata = localStorage.getItem("allMapData");
     } catch (e) {}
 
     if (allMapData.length > 0) {
@@ -161,9 +161,9 @@ try {
       .then(function(data) {
         // console.log("searchData " + data);
         try {
-          if (data.length != undefined && data.length != 0) {
-            localStorage.setItem("allMapData", JSON.stringify(data));
-          }
+          // if (data.length != undefined && data.length != 0) {
+          //   localStorage.setItem("allMapData", JSON.stringify(data));
+          // }
         } catch (e) {}
 
         allMapData = data;
