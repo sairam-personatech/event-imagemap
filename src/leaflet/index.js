@@ -183,7 +183,7 @@ try {
             return areas.map(area => {
               if (!area.title.includes("Image Map")) {
                 return area.title + " Level : " + parentLevel;
-              }else{
+              } else {
                 return "";
               }
             });
@@ -462,7 +462,7 @@ try {
         // console.log("current zoom is " + this._zoom);
 
         //map.setView([originaly - 200, x], 0);
-        map.setView([originaly , x], 0);
+        map.setView([originaly, x], 0);
         isfound = true;
         break;
       }
@@ -646,21 +646,56 @@ function hideKeyboard(element) {
   }, 100);
 }
 
-// function onReady(callback) {
-//   var intervalId = window.setInterval(function() {
-//     if (document.getElementsByTagName('body')[0] !== undefined) {
-//       window.clearInterval(intervalId);
-//       callback.call(this);
-//     }
-//   }, 1000);
-// }
+$(document).ready(function() {
+  clickCheck();
+  openOptions();
+  searchItDude();
 
+  function clickCheck() {
+    $("body").on("click", ".hasClick", function() {
+      $(this)
+        .parents("ul")
+        .find("li.active")
+        .removeClass("active");
+      $(this)
+        .parent("li")
+        .addClass("active");
+    });
+  }
 
-// function setVisible(selector, visible) {
-//   document.querySelector(selector).style.display = visible ? 'block' : 'none';
-// }
+  function openOptions() {
+    $("body").on("click", ".pt-showMenu > span", function() {
+      var text = $(this).text();
+      if (text === "choose maps") {
+        $(this).text("hide options");
+      } else {
+        $(this).text("choose maps");
+      }
+      $(this)
+        .parent(".pt-showMenu")
+        .toggleClass("slideDown");
+      $(".hasOverlay").toggleClass("showOverlay");
+      $(".pt-mapTopNav").toggleClass("open");
+    });
+  }
 
-// onReady(function() {
-//   setVisible('#mainBody', true);
-//   setVisible('#loading', false);
-// });
+  function searchItDude() {
+    $("body").on("keyup", ".pt-searchFloor > .pt-formControl", function() {
+      var $this = $(this);
+      if (this.value == "") {
+        $this.parent(".pt-searchFloor").removeClass("isSearching");
+      } else {
+        $this.parent(".pt-searchFloor").addClass("isSearching");
+      }
+    });
+    $("body").on("click", ".clearSearch", function() {
+      $(this)
+        .parent(".pt-searchFloor")
+        .find(".pt-formControl")
+        .val("");
+      $(this)
+        .parent(".pt-searchFloor")
+        .removeClass("isSearching");
+    });
+  }
+});
