@@ -44,9 +44,51 @@ export function loadMap(map, maplevel, allMapData, imageUrlParam) {
   createFloorMapsSelectionButtons(levelToLoad, allMapData);
   currentVal.imageMap = L.imageOverlay(imageUrl, currentVal.bounds).addTo(map);
 
-  map.fitBounds(currentVal.bounds);
+  //map.fitBounds(currentVal.bounds);
   //map.invalidateSize();
   //map.setView(currentVal.bounds);
+
+  let centroid = get_polygon_centroid(currentVal.bounds);
+
+  var originaly = centroid.y;
+  var x = centroid.x;
+
+  switch (levelToLoad) {
+    case 10:
+      map.flyTo([originaly, x], -1, {
+        animate: true,
+        duration: 1 // in seconds
+      });
+      break;
+    case 11:
+      map.flyTo([originaly, x], -1, {
+        animate: true,
+        duration: 1 // in seconds
+      });
+      break;
+    case 20:
+      map.flyTo([originaly-200, x+100], -1, {
+        animate: true,
+        duration: 1 // in seconds
+      });
+      break;
+    case 30:
+      map.flyTo([originaly-400, x+500], 0), {
+        animate: true,
+        duration: 1 // in seconds
+      };
+      break;
+    default:
+      map.flyTo([originaly, x], -1, {
+        animate: true,
+        duration: 1 // in seconds
+      });
+  }
+
+  //map.setMaxBounds(currentVal.bounds);
+  map.on("drag", function() {
+    map.panInsideBounds(currentVal.bounds, { animate: false });
+  });
 }
 
 /**
@@ -378,4 +420,8 @@ function autoCompleteLevel(autoCompleteData) {
       source: autoCompleteData
     });
   });
+}
+
+function setVisible(selector, visible) {
+  document.querySelector(selector).style.display = visible ? "block" : "none";
 }

@@ -78,12 +78,13 @@ L.Map = L.Map.extend({
 
 var map = initializeMap();
 
-function initializeMap(){
+function initializeMap() {
   return L.map("map", {
     maxZoom: 10,
-    minZoom: -1,
+    minZoom: -2,
+    zoomSnap: 0.1,
     crs: L.CRS.Simple
-  }).setView([2025, 2386], -1);
+  }).setView([2025, 2386], 0);
 }
 
 try {
@@ -179,7 +180,13 @@ try {
           })
           .map(areas => {
             let parentLevel = Number(areas.parentLevel);
-            return areas.map(area => area.title + " Level : " + parentLevel);
+            return areas.map(area => {
+              if (!area.title.includes("Image Map")) {
+                return area.title + " Level : " + parentLevel;
+              }else{
+                return "";
+              }
+            });
           })
           .flat();
         let uniquetags = new Set(autoCompleteData);
@@ -277,7 +284,7 @@ try {
    * @param {The Title of the Room to Search} title
    */
   window.searchAcrossLevel = function searchAcrossLevel(title) {
-    hideKeyboard($('input'));
+    hideKeyboard($("input"));
     closeOptions();
     let searchTerms = title.split(":");
     let parentLevel = Number(searchTerms[1].trim());
@@ -330,7 +337,7 @@ try {
     //   "<div id='map' style='width:400; height: 750px;'></div>";
 
     document.getElementById("mapContainer").innerHTML =
-    "<div id='map' style='width:400; height: 680px;'></div>";
+      "<div id='map' style='width:400; height: 680px;'></div>";
 
     map = undefined;
     map = initializeMap();
@@ -454,7 +461,8 @@ try {
 
         // console.log("current zoom is " + this._zoom);
 
-        map.setView([originaly - 200, x], 0);
+        //map.setView([originaly - 200, x], 0);
+        map.setView([originaly , x], 0);
         isfound = true;
         break;
       }
@@ -556,7 +564,7 @@ try {
       }).addTo(map);
       polylinelayer.push(polyline);
       //map.setView([originaly+100, x], 0);
-      map.flyTo(latlngvalue, 0);//working
+      map.flyTo(latlngvalue, 0); //working
       //map.setView(latlngvalue,0);//working
       //map.setView([originaly-700, x]); // working
       //map.setView([originaly-500, x],0);
@@ -628,12 +636,31 @@ try {
 }
 
 function hideKeyboard(element) {
-  element.attr('readonly', 'readonly'); // Force keyboard to hide on input field.
-  element.attr('disabled', 'true'); // Force keyboard to hide on textarea field.
+  element.attr("readonly", "readonly"); // Force keyboard to hide on input field.
+  element.attr("disabled", "true"); // Force keyboard to hide on textarea field.
   setTimeout(function() {
-      element.blur();  //actually close the keyboard
-      // Remove readonly attribute after keyboard is hidden.
-      element.removeAttr('readonly');
-      element.removeAttr('disabled');
+    element.blur(); //actually close the keyboard
+    // Remove readonly attribute after keyboard is hidden.
+    element.removeAttr("readonly");
+    element.removeAttr("disabled");
   }, 100);
 }
+
+// function onReady(callback) {
+//   var intervalId = window.setInterval(function() {
+//     if (document.getElementsByTagName('body')[0] !== undefined) {
+//       window.clearInterval(intervalId);
+//       callback.call(this);
+//     }
+//   }, 1000);
+// }
+
+
+// function setVisible(selector, visible) {
+//   document.querySelector(selector).style.display = visible ? 'block' : 'none';
+// }
+
+// onReady(function() {
+//   setVisible('#mainBody', true);
+//   setVisible('#loading', false);
+// });
