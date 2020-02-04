@@ -69,11 +69,22 @@ L.Map = L.Map.extend({
 //   crs: L.CRS.Simple
 // }).setView([2025, 2386]);
 
-var map = L.map("map", {
-  maxZoom: 3,
-  minZoom: -3,
-  crs: L.CRS.Simple
-}).setView([2025, 2386], -3);
+//working
+// var map = L.map("map", {
+//   maxZoom: 3,
+//   minZoom: -3,
+//   crs: L.CRS.Simple
+// }).setView([2025, 2386], -3);
+
+var map = initializeMap();
+
+function initializeMap(){
+  return L.map("map", {
+    maxZoom: 10,
+    minZoom: -1,
+    crs: L.CRS.Simple
+  }).setView([2025, 2386], -1);
+}
 
 try {
   /**
@@ -314,15 +325,21 @@ try {
     // );
 
     //Refresh Map Conatiner
+    // document.getElementById("mapContainer").innerHTML =
+    //   "<div id='map' style='width:400; height: 750px;'></div>";
+
     document.getElementById("mapContainer").innerHTML =
-      "<div id='map' style='width:400; height: 750px;'></div>";
+    "<div id='map' style='width:400; height: 680px;'></div>";
 
     map = undefined;
-    map = L.map("map", {
-      maxZoom: 3,
-      minZoom: -3,
-      crs: L.CRS.Simple
-    }).setView([2025, 2386], -3);
+    map = initializeMap();
+    // map = L.map("map", {
+    //   maxZoom: 3,
+    //   minZoom: -3,
+    //   crs: L.CRS.Simple
+    // }).setView([2025, 2386], -1);
+
+    map.on("click", onMapClick);
 
     openFloorMap(foundMapLevelToSearch.level, titleToSearch);
   };
@@ -538,10 +555,10 @@ try {
       }).addTo(map);
       polylinelayer.push(polyline);
       //map.setView([originaly+100, x], 0);
-      map.setView(latlngvalue, 0);
-      //map.setView(latlngvalue);//working
+      map.flyTo(latlngvalue, 0);//working
+      //map.setView(latlngvalue,0);//working
       //map.setView([originaly-700, x]); // working
-      //map.setView([originaly-250, x]);
+      //map.setView([originaly-500, x],0);
       //map.setView([originaly, x]);
       //map.setZoom(0);
       //map.setView(latlngvalue,2);
