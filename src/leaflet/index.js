@@ -57,11 +57,34 @@ L.Map = L.Map.extend({
 //   crs: L.CRS.Simple
 // }).setView([3300, 2550], -2);
 
-var map = L.map("map", {
-  maxZoom: 10,
-  minZoom: -2,
-  crs: L.CRS.Simple
-}).setView([2025, 2386], -2);
+// var map = L.map("map", {
+//   maxZoom: 10,
+//   minZoom: -2,
+//   crs: L.CRS.Simple
+// }).setView([2025, 2386], -2);
+
+// var map = L.map("map", {
+//   maxZoom: 20,
+//   minZoom: -1,
+//   crs: L.CRS.Simple
+// }).setView([2025, 2386]);
+
+//working
+// var map = L.map("map", {
+//   maxZoom: 3,
+//   minZoom: -3,
+//   crs: L.CRS.Simple
+// }).setView([2025, 2386], -3);
+
+var map = initializeMap();
+
+function initializeMap(){
+  return L.map("map", {
+    maxZoom: 10,
+    minZoom: -1,
+    crs: L.CRS.Simple
+  }).setView([2025, 2386], -1);
+}
 
 try {
   /**
@@ -70,8 +93,10 @@ try {
   window.onload = function() {
     urlParams = new URLSearchParams(window.location.search);
 
-    if(urlParams.get("backButton")){
-      document.getElementsByClassName("pt-searchFloor")[0].classList.add("hasBackBtn");
+    if (urlParams.get("backButton")) {
+      document
+        .getElementsByClassName("pt-searchFloor")[0]
+        .classList.add("hasBackBtn");
     }
 
     renderMap(
@@ -100,8 +125,9 @@ try {
   ) {
     let promise;
     let localStorageMapdata;
+
     try {
-      localStorageMapdata = localStorage.getItem("allMapData");
+      //localStorageMapdata = localStorage.getItem("allMapData");
     } catch (e) {}
 
     if (allMapData.length > 0) {
@@ -116,6 +142,12 @@ try {
         resolve(JSON.parse(localStorageMapdata));
       });
     } else {
+      // const myInit = {
+      //   method: 'HEAD',
+      //   mode: 'no-cors',
+      // };
+      // const myRequest = new Request(testURL, myInit);
+
       var fetchHeaders = new Headers({
         "Access-Control-Allow-Origin": "*"
       });
@@ -129,9 +161,9 @@ try {
       .then(function(data) {
         // console.log("searchData " + data);
         try {
-          if (data.length != undefined && data.length != 0) {
-            localStorage.setItem("allMapData", JSON.stringify(data));
-          }
+          // if (data.length != undefined && data.length != 0) {
+          //   localStorage.setItem("allMapData", JSON.stringify(data));
+          // }
         } catch (e) {}
 
         allMapData = data;
@@ -245,6 +277,7 @@ try {
    * @param {The Title of the Room to Search} title
    */
   window.searchAcrossLevel = function searchAcrossLevel(title) {
+    hideKeyboard($('input'));
     closeOptions();
     let searchTerms = title.split(":");
     let parentLevel = Number(searchTerms[1].trim());
@@ -284,14 +317,32 @@ try {
 
     removeLayers(map, polylinelayer);
 
+    // renderMap(
+    //   urlParams.get("eventId"),
+    //   titleToSearch,
+    //   foundMapLevelToSearch.level,
+    //   undefined,
+    //   undefined
+    // );
+
+    //Refresh Map Conatiner
+    // document.getElementById("mapContainer").innerHTML =
+    //   "<div id='map' style='width:400; height: 750px;'></div>";
+
+    document.getElementById("mapContainer").innerHTML =
+    "<div id='map' style='width:400; height: 680px;'></div>";
+
+    map = undefined;
+    map = initializeMap();
+    // map = L.map("map", {
+    //   maxZoom: 3,
+    //   minZoom: -3,
+    //   crs: L.CRS.Simple
+    // }).setView([2025, 2386], -1);
+
+    map.on("click", onMapClick);
+
     openFloorMap(foundMapLevelToSearch.level, titleToSearch);
-
-    // let latlngvalue = {
-    //   lng: centroid.x,
-    //   lat: currentVal.bounds[1][0] - centroid.y
-    // };
-
-    // map.setView(latlngvalue, 0);
   };
   /**
    *
@@ -327,7 +378,7 @@ try {
         delayedProjectionOfMultiplePins(item, index);
       });
 
-      drawPathsInMap(areas);
+      //drawPathsInMap(areas);
     }
   };
   /**
@@ -359,7 +410,7 @@ try {
         }
 
         //set ant path
-        drawPathsInMap(areas);
+        //drawPathsInMap(areas);
 
         if (item.href) {
           popups.push(
@@ -403,7 +454,7 @@ try {
 
         // console.log("current zoom is " + this._zoom);
 
-        map.setView([originaly, x], 0);
+        map.setView([originaly - 200, x], 0);
         isfound = true;
         break;
       }
@@ -457,6 +508,9 @@ try {
       };
 
       let e = { latlng: latlngvalue };
+
+      var originaly = centroid.y;
+      var x = centroid.x;
       // console.log("original values " + JSON.stringify(latlngvalue));
 
       if (item.href) {
@@ -501,8 +555,19 @@ try {
         smoothFactor: 1
       }).addTo(map);
       polylinelayer.push(polyline);
-      map.setView(latlngvalue, 0);
+      //map.setView([originaly+100, x], 0);
+      map.flyTo(latlngvalue, 0);//working
+      //map.setView(latlngvalue,0);//working
+      //map.setView([originaly-700, x]); // working
+      //map.setView([originaly-500, x],0);
+      //map.setView([originaly, x]);
+      //map.setZoom(0);
+      //map.setView(latlngvalue,2);
       //Delay for animation
+
+      //map.panTo(new L.LatLng(originaly, x));//working
+      //map.flyTo(new L.LatLng(originaly, x));
+      //map.fitBounds(polyline);
     }, delayInMilliseconds * index);
   }
 
@@ -560,4 +625,15 @@ try {
   });
 } catch (e) {
   alert(e.message);
+}
+
+function hideKeyboard(element) {
+  element.attr('readonly', 'readonly'); // Force keyboard to hide on input field.
+  element.attr('disabled', 'true'); // Force keyboard to hide on textarea field.
+  setTimeout(function() {
+      element.blur();  //actually close the keyboard
+      // Remove readonly attribute after keyboard is hidden.
+      element.removeAttr('readonly');
+      element.removeAttr('disabled');
+  }, 100);
 }
