@@ -698,4 +698,8 @@ $(document).ready(function() {
         .removeClass("isSearching");
     });
   }
+
+  $("body").on("click", ".goBackDude", function() {
+    window.webkit.messageHandlers.backButtonPressed.postMessage({});
+  });
 });
