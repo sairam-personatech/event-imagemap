@@ -680,13 +680,13 @@ $(document).ready(function() {
   }
 
   function searchItDude() {
-    $("body").on("keyup", ".pt-searchFloor > .pt-formControl", function() {
+    $("body").on("focus", ".pt-searchFloor > .pt-formControl", function() {
       var $this = $(this);
-      if (this.value == "") {
-        $this.parent(".pt-searchFloor").removeClass("isSearching");
-      } else {
-        $this.parent(".pt-searchFloor").addClass("isSearching");
-      }
+      $this.parent(".pt-searchFloor").addClass("isSearching");
+    });
+    $("body").on("focusout", ".pt-searchFloor > .pt-formControl", function() {
+      var $this = $(this);
+      $this.parent(".pt-searchFloor").removeClass("isSearching");
     });
     $("body").on("click", ".clearSearch", function() {
       $(this)
